@@ -1,0 +1,72 @@
+models:
+  Race:
+    name: string:500
+    length: string:500 nullable
+    series_id: id foreign:series
+    track_id: id foreign:track
+    season_id: id foreign:season
+    starts_at: nullable timestamp
+    finishes_at: nullable timestamp
+    timestamps
+    softDeletes
+    relationships:
+      belongsTo: Series, Track, Season
+      hasMany: Result, Picks
+      belongsToMany: Car, League
+
+  Pick:
+    race_id: id foreign:race
+    car_id: id foreign:car
+    user_id: id foreign:user
+    timestamps
+    softDeletes
+
+  League:
+    name: string:500
+    timestamps
+    softDeletes
+    relationships:
+      belongsToMany: Race, User
+
+  Result:
+    start: interger nullable
+    position: interger nullable
+    car_id: id foreign:car
+    race_id: id foreign:race
+    timestamps
+    softDeletes
+    relationships:
+      belongsTo: Car, Race
+
+  Series:
+    title: string:400
+    timestamps
+    softDeletes
+    relationships:
+      hasMany: Car, Race
+
+  Track:
+    name: string:400
+    timestamps
+    softDeletes
+    relationships:
+      hasMany: Race
+
+  Car:
+    number: interger
+    series_id: id foreign:series
+    timestamps
+    softDeletes
+    relationships:
+      belongsTo: Series
+      belongsToMany: Race
+
+  Season:
+    title: string:400
+    timestamps
+    softDeletes
+    relationships:
+      hasMany: Race
+
+controllers:
+  # ...

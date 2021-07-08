@@ -1,0 +1,61 @@
+created:
+    - database/factories/RaceFactory.php
+    - database/factories/PickFactory.php
+    - database/factories/LeagueFactory.php
+    - database/factories/ResultFactory.php
+    - database/factories/SeriesFactory.php
+    - database/factories/TrackFactory.php
+    - database/factories/CarFactory.php
+    - database/factories/SeasonFactory.php
+    - database/migrations/2021_04_05_222710_create_races_table.php
+    - database/migrations/2021_04_05_222711_create_picks_table.php
+    - database/migrations/2021_04_05_222712_create_leagues_table.php
+    - database/migrations/2021_04_05_222713_create_results_table.php
+    - database/migrations/2021_04_05_222714_create_series_table.php
+    - database/migrations/2021_04_05_222715_create_tracks_table.php
+    - database/migrations/2021_04_05_222716_create_cars_table.php
+    - database/migrations/2021_04_05_222717_create_seasons_table.php
+    - database/migrations/2021_04_05_222718_create_car_race_table.php
+    - database/migrations/2021_04_05_222719_create_league_race_table.php
+    - database/migrations/2021_04_05_222720_create_league_user_table.php
+    - app/Models/Race.php
+    - app/Models/Pick.php
+    - app/Models/League.php
+    - app/Models/Result.php
+    - app/Models/Series.php
+    - app/Models/Track.php
+    - app/Models/Car.php
+    - app/Models/Season.php
+    - app/Nova/Race.php
+    - app/Nova/Pick.php
+    - app/Nova/League.php
+    - app/Nova/Result.php
+    - app/Nova/Series.php
+    - app/Nova/Track.php
+    - app/Nova/Car.php
+    - app/Nova/Season.php
+models:
+    Models\User: {  }
+    Race: { name: 'string:500', length: 'string:500 nullable', series_id: 'id foreign:series', track_id: 'id foreign:track', season_id: 'id foreign:season', starts_at: 'nullable timestamp', finishes_at: 'nullable timestamp', timestamps: timestamps, softdeletes: softDeletes, relationships: { belongsTo: 'Series, Track, Season', hasMany: 'Result, Picks', belongsToMany: 'Car, League' } }
+    RaceResut: { position: interger, car_id: interger, race_id: interger, timestamps: timestamps, softdeletes: softDeletes, relationships: { belongsTo: 'Car, Race' } }
+    Series: { title: 'string:400', timestamps: timestamps, softdeletes: softDeletes, relationships: { hasMany: 'Car, Race' } }
+    Track: { name: 'string:400', timestamps: timestamps, softdeletes: softDeletes, relationships: { hasMany: Race } }
+    Car: { number: interger, series_id: 'id foreign:series', timestamps: timestamps, softdeletes: softDeletes, relationships: { belongsTo: Series, belongsToMany: Race } }
+    Season: { title: 'string:400', timestamps: timestamps, softdeletes: softDeletes, relationships: { hasMany: Race } }
+    App/Models/Race: { title: 'string:400', length: 'string:400 nullable', series_id: 'id foreign:series', track_id: 'id foreign:track', season_id: 'id foreign:season', starts_at: 'nullable timestamp', finishes_at: 'nullable timestamp', timestamps: timestamps, softdeletes: softDeletes, relationships: { belongsTo: 'Series, Track, Season', hasMany: Car } }
+    App/Models/RaceResut: { position: interger, car_id: interger, race_id: interger, timestamps: timestamps, softdeletes: softDeletes, relationships: { belongsTo: 'Car, Race' } }
+    App/Models/Series: { title: 'string:400', timestamps: timestamps, softdeletes: softDeletes, relationships: { hasMany: 'Car, Race' } }
+    App/Models/Track: { name: 'string:400', timestamps: timestamps, softdeletes: softDeletes, relationships: { hasMany: Race } }
+    App/Models/Car: { number: interger, series_id: 'id foreign:track', timestamps: timestamps, softdeletes: softDeletes, relationships: { belongsTo: Series, hasMany: Race } }
+    App/Models/Season: { title: 'string:400', timestamps: timestamps, softdeletes: softDeletes, relationships: { hasMany: Race } }
+    Models/Race: { title: 'string:400', length: 'string:400 nullable', series_id: 'id foreign:series', track_id: 'id foreign:track', season_id: 'id foreign:season', starts_at: 'nullable timestamp', finishes_at: 'nullable timestamp', timestamps: timestamps, softdeletes: softDeletes, relationships: { belongsTo: 'Series, Track, Season', hasMany: Car } }
+    Models/RaceResut: { position: interger, car_id: interger, race_id: interger, timestamps: timestamps, softdeletes: softDeletes, relationships: { belongsTo: 'Car, Race' } }
+    Models/Series: { title: 'string:400', timestamps: timestamps, softdeletes: softDeletes, relationships: { hasMany: 'Car, Race' } }
+    Models/Track: { name: 'string:400', timestamps: timestamps, softdeletes: softDeletes, relationships: { hasMany: Race } }
+    Models/Car: { number: interger, series_id: 'id foreign:track', timestamps: timestamps, softdeletes: softDeletes, relationships: { belongsTo: Series, hasMany: Race } }
+    Models/Season: { title: 'string:400', timestamps: timestamps, softdeletes: softDeletes, relationships: { hasMany: Race } }
+    Result: { start: 'interger nullable', position: 'interger nullable', car_id: 'id foreign:car', race_id: 'id foreign:race', timestamps: timestamps, softdeletes: softDeletes, relationships: { belongsTo: 'Car, Race' } }
+    Pick: { race_id: 'id foreign:race', car_id: 'id foreign:car', user_id: 'id foreign:user', timestamps: timestamps, softdeletes: softDeletes }
+    League: { name: 'string:500', timestamps: timestamps, softdeletes: softDeletes, relationships: { belongsToMany: 'Race, User' } }
+    LeagueRace: { league_id: 'id foreign:league', race_id: 'id foreign:race', timestamps: timestamps, softdeletes: softDeletes }
+    LeagueUser: { user_id: 'id foreign:user', league_id: 'id foreign:league', timestamps: timestamps, softdeletes: softDeletes }
