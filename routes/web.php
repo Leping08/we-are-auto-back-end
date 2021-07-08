@@ -22,6 +22,6 @@ Route::get('/', function () {
 Route::get('/races/{race}/users/{user}', [\App\Http\Controllers\TestController::class, 'count']);
 
 Route::get('/test', function () {
-    \App\Library\RaceData\Imsa::test();
+    // \App\Library\RaceData\Imsa::test();
     return 'done';
 });
