@@ -56,7 +56,6 @@ jobs:
         run: vendor/bin/phpunit
         env:
           DB_PORT: ${{ job.services.mysql.ports[3306] }}
-          DB_PASSWORD: secret
 
   vapor:
     needs: [ci_tests]
