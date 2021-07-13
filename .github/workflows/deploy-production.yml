@@ -11,6 +11,19 @@ jobs:
   ci_tests:
     name: Run phpunit tests
     runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_DATABASE: TDD
+          MYSQL_USER: user
+          MYSQL_PASSWORD: secret
+          MYSQL_ROOT_PASSWORD: secretroot
+        ports:
+          - 33306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
     steps:
       - uses: actions/checkout@v2
       - name: Setup PHP
@@ -19,18 +32,32 @@ jobs:
           php-version: 7.4
           tools: composer:v2
           coverage: none
-      - name: Copy .env
-        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+
+      - name: Verify MySQL connection
+          run: |
+            mysql --version
+            sudo apt-get install -y mysql-client
+            mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports['3306'] }} -uuser -psecret -e "SHOW DATABASES"
+
       - name: Install Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+
       - name: Generate key
-        run: php artisan key:generate
+        run: |
+          php artisan key:generate
+          php artisan --version
+
       - name: Directory Permissions
         run: chmod -R 777 storage bootstrap/cache
+
       - name: Create Database
         run: |
           mkdir -p database
           touch database/database.sqlite
+
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         env:
           DB_CONNECTION: sqlite
@@ -39,7 +66,7 @@ jobs:
 
   vapor:
     needs: [ci_tests]
-    name: Check out, build and deploy using Vapor
+    name: Deploy to vapor
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
