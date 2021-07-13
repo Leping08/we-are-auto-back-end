@@ -13,11 +13,22 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
+#      mysql:
+#        image: mysql:5.7
+#        env:
+#          MYSQL_ROOT_PASSWORD: password
+#          MYSQL_DATABASE: test
+#        ports:
+#          - 33306:3306
+#        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
       mysql:
         image: mysql:5.7
         env:
-          MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: test
+          MYSQL_USER: user
+          MYSQL_PASSWORD: secret
+          MYSQL_ROOT_PASSWORD: secretroot
         ports:
           - 33306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
@@ -30,6 +41,12 @@ jobs:
           php-version: 7.4
           tools: composer:v2
           coverage: none
+
+      - name: Verify MySQL connection
+        run: |
+          mysql --version
+          sudo apt-get install -y mysql-client
+          mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports['3306'] }} -uuser -psecret -e "SHOW DATABASES"
 
       - name: Install Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
@@ -46,6 +63,11 @@ jobs:
         run: chmod -R 777 storage bootstrap/cache
 
       - name: Execute tests (Unit and Feature tests) via PHPUnit
+        env:
+          MYSQL_DATABASE: test
+          DB_USERNAME: user
+          DB_PASSWORD: secret
+          DB_PORT: ${{ job.services.mysql.ports[3306] }}
         run: vendor/bin/phpunit
 
   vapor:
