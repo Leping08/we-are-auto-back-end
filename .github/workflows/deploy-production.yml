@@ -36,7 +36,6 @@ jobs:
       - name: Verify MySQL connection
         run: |
           mysql --version
-          sudo apt-get install -y mysql-client
           mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports['3306'] }} -uuser -psecret -e "SHOW DATABASES"
 
       - name: Install Dependencies
@@ -57,6 +56,7 @@ jobs:
         run: vendor/bin/phpunit
         env:
           DB_PORT: ${{ job.services.mysql.ports[3306] }}
+          DB_PASSWORD: secret
 
   vapor:
     needs: [ci_tests]
