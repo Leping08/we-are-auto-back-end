@@ -8,18 +8,23 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\Post
+ * App\Models\Race
  *
  * @property integer $id
- * @property integer $author_id
- * @property string $title
- * @property string $text
+ * @property string $name
+ * @property string $length
+ * @property integer $series_id
+ * @property integer $track_id
+ * @property integer $season_id
+ * @property Carbon starts_at
+ * @property Carbon finishes_at
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property Carbon $deleted_at
- * @property-read User $user
- * @property $activeSeason
- * @property-read \Illuminate\Database\Eloquent\Collection|\Comment[] $comments
+ * @property bool $new
+ * @property-read Series $series
+ * @property-read Track $track
+ * @property-read Season $season
  */
 
 class Race extends Model
@@ -53,6 +58,7 @@ class Race extends Model
         'season_id' => 'integer',
         'starts_at' => 'datetime',
         'finishes_at' => 'datetime',
+        'boolean' => 'new'
     ];
 
 

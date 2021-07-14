@@ -16,9 +16,9 @@ use Illuminate\Support\Facades\Route;
 
 //Passport token routes are in App\Providers\AuthServiceProvider
 
-Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login']);
-Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register']);
-Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout']);
+Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login'])->name('login');
+Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register'])->name('register');
+Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 
 Route::group(['middleware' => ['auth:api']], function() {
 

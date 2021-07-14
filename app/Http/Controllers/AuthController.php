@@ -34,7 +34,7 @@ class AuthController extends Controller
         $request->validate([
             'name' => ['required', 'max:255'],
             'email' => ['required', 'email', 'unique:users', 'max:255'],
-            'password' => ['required', 'min:6', 'max:30']
+            'password' => ['required', 'min:6', 'max:30', 'confirmed']
         ]);
 
         User::create([
@@ -42,6 +42,8 @@ class AuthController extends Controller
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password'))
         ]);
+
+        //TODO send email verification email
     }
 
     public function logout()

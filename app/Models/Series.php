@@ -2,9 +2,25 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
+/**
+ * App\Models\Series
+ *
+ * @property integer $id
+ * @property string $name
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ * @property Carbon $deleted_at
+ * @property-read Car $cars
+ * @property-read Race $races
+ * @property-read Race $active_season_races
+ * @property-read League $leagues
+ * @property-read CarClass $car_classes
+ */
 
 class Series extends Model
 {
@@ -54,6 +70,9 @@ class Series extends Model
         return $this->belongsToMany(CarClass::class, Car::class);
     }
 
+    /**
+     * @see unique_car_classes
+     */
     public function unique_car_classes()
     {
         return $this->car_classes->unique();
