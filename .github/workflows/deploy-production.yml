@@ -63,13 +63,6 @@ jobs:
           php artisan migrate
           vendor/bin/phpunit -v
 
-      - name: Run security checks
-        run: |
-          test -d security-checker || git clone https://github.com/sensiolabs/security-checker.git
-          cd security-checker
-          composer install
-          php security-checker security:check ../composer.lock
-
   vapor:
     needs: [ci_tests]
     name: Deploy to vapor
