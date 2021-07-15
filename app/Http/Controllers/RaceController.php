@@ -7,9 +7,13 @@ use Illuminate\Http\Request;
 
 class RaceController extends Controller
 {
-    public function show(Race $race)
+    public function index()
     {
-        //TODO Authorize someone can look at the race and picks
+        return Race::all();
+    }
+
+    public function show(Race $race): Race
+    {
         return $race->load(['series', 'track', 'season']);
     }
 }

@@ -15,43 +15,43 @@ use Illuminate\Support\Facades\Route;
 */
 
 //Passport token routes are in App\Providers\AuthServiceProvider
-
 Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login'])->name('login');
 Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register'])->name('register');
 Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 
-Route::group(['middleware' => ['auth:api']], function() {
-
-    //Auth/User
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
-
-    Route::get('/users/{user}', function (\App\Models\User $user) {
-        return $user;
-    });
-
+Route::group(['middleware' => ['api']], function() {
 
     //Series
-    Route::get('/series', [\App\Http\Controllers\SeriesController::class, 'index']);
-    Route::get('/series/{series}', [\App\Http\Controllers\SeriesController::class, 'show']);
-
-    //Cars
-    Route::get('/series/{series}/cars', [\App\Http\Controllers\SeriesCarsController::class, 'show']);
-
-    //Leagues
-    Route::get('/leagues', [\App\Http\Controllers\LeaguesController::class, 'index']);
-    Route::get('/leagues/{league}', [\App\Http\Controllers\LeaguesController::class, 'show']);
-
-    //CurrentPicks
-    Route::get('/leagues/{league}/current-picks', [\App\Http\Controllers\CurrentPickLeagueController::class, 'show']);
-    Route::post('/current-picks', [\App\Http\Controllers\CurrentPickLeagueController::class, 'store']);
+    Route::get('/series', [\App\Http\Controllers\SeriesController::class, 'index'])->name('series.index');
+    Route::get('/series/{series}', [\App\Http\Controllers\SeriesController::class, 'show'])->name('series.show');
 
     //Race
-    Route::get('/races/{race}', [\App\Http\Controllers\RaceController::class, 'show']);
+    Route::get('/races', [\App\Http\Controllers\RaceController::class, 'index'])->name('races.index');
+    Route::get('/races/{race}', [\App\Http\Controllers\RaceController::class, 'show'])->name('races.show');
 
-    //RaceResults
-    Route::get('/race-results/league/{league}/user/{user}', [\App\Http\Controllers\RaceResultsController::class, 'show']);
+
+
+    //Auth Group
+    Route::group(['middleware' => ['auth']], function() {
+        //User
+        Route::get('/user', function (Request $request) {
+            return $request->user();
+        })->name('user.index');
+
+        //Cars
+        Route::get('/series/{series}/cars', [\App\Http\Controllers\SeriesCarsController::class, 'show']);
+
+        //Leagues
+        Route::get('/leagues', [\App\Http\Controllers\LeaguesController::class, 'index'])->name('leagues.index');
+        Route::get('/leagues/{league}', [\App\Http\Controllers\LeaguesController::class, 'show'])->name('leagues.show');
+
+        //CurrentPicks
+        Route::get('/leagues/{league}/current-picks', [\App\Http\Controllers\CurrentPickLeagueController::class, 'show']);
+        Route::post('/current-picks', [\App\Http\Controllers\CurrentPickLeagueController::class, 'store']);
+
+        //RaceResults
+        Route::get('/race-results/league/{league}/user/{user}', [\App\Http\Controllers\RaceResultsController::class, 'show']);
+    });
 });
 
 
