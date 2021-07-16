@@ -14,6 +14,6 @@ class RaceController extends Controller
 
     public function show(Race $race): Race
     {
-        return $race->load(['series', 'track', 'season']);
+        return $race->load(['series', 'track', 'season', 'videos.platform']);
     }
 }

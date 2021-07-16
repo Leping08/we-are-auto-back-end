@@ -25,6 +25,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read Series $series
  * @property-read Track $track
  * @property-read Season $season
+ * @property-read Video $videos
  */
 
 class Race extends Model
@@ -90,6 +91,11 @@ class Race extends Model
     public function cars()
     {
         return $this->belongsToMany(Car::class, 'results');
+    }
+
+    public function videos()
+    {
+        return $this->hasMany(Video::class);
     }
 
     public function user_results(User $user)

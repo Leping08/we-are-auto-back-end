@@ -8,41 +8,26 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\Models\Series
+ * App\Models\VideoPlatform
  *
  * @property integer $id
  * @property string $name
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property Carbon $deleted_at
- * @property-read Race $races
+ * @property-read Video $videos
  */
 
-class Track extends Model
+class VideoPlatform extends Model
 {
     use HasFactory, SoftDeletes;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
-        'name',
+        'name'
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'id' => 'integer',
-    ];
-
-
-    public function races()
+    public function videos()
     {
-        return $this->hasMany(Race::class);
+        $this->hasMany(Video::class);
     }
 }

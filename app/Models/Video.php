@@ -8,17 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\Models\Series
+ * App\Models\Video
  *
  * @property integer $id
- * @property string $name
+ * @property string $video_id
+ * @property integer $video_platform_id
+ * @property integer $race_id
+ * @property integer $start_time
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property Carbon $deleted_at
- * @property-read Race $races
+ * @property-read Race $race
+ * @property-read VideoPlatform $platform
  */
 
-class Track extends Model
+class Video extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -28,7 +32,10 @@ class Track extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
+        'video_id',
+        'video_platform_id',
+        'start_time',
+        'race_id',
     ];
 
     /**
@@ -38,11 +45,19 @@ class Track extends Model
      */
     protected $casts = [
         'id' => 'integer',
+        'video_id' => 'string',
+        'video_platform_id' => 'integer',
+        'start_time' => 'integer',
+        'race_id' => 'integer',
     ];
 
-
-    public function races()
+    public function race()
     {
-        return $this->hasMany(Race::class);
+        return $this->belongsTo(Race::class);
+    }
+
+    public function platform()
+    {
+        return $this->belongsTo(VideoPlatform::class);
     }
 }

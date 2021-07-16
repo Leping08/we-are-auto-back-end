@@ -11,7 +11,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
 /**
- * App\Models\Series
+ * App\Models\User
  *
  * @property integer $id
  * @property string $name
