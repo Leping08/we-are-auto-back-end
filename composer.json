@@ -17,7 +17,8 @@
         "laravel/tinker": "^2.5",
         "laravel/vapor-core": "^2.12",
         "paquettg/php-html-parser": "^3.1",
-        "spatie/simple-excel": "^1.13"
+        "spatie/simple-excel": "^1.13",
+        "laravel/nova": "~3.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
@@ -51,6 +52,12 @@
             "Tests\\": "tests/"
         }
     },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://nova.laravel.com"
+        }
+    ],
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
@@ -63,6 +70,13 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "post-install-cmd": [
+            "Illuminate\\Foundation\\ComposerScripts::postInstall"
+        ],
+        "post-update-cmd": [
+            "Illuminate\\Foundation\\ComposerScripts::postUpdate",
+            "@php artisan nova:publish --ansi"
         ]
     }
 }

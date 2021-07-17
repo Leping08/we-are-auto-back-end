@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read Race $active_season_races
  * @property-read League $leagues
  * @property-read CarClass $car_classes
+ * @property-read CarClass $unique_car_classes
  */
 
 class Series extends Model
