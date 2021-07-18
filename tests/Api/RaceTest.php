@@ -40,4 +40,16 @@ class RaceTest extends TestCase
             ->assertSee(['videos', 'series', 'season', 'platform', 'track'])
             ->assertSee($video['video_id']);
     }
+
+    /** @test */
+    public function a_user_can_get_the_latest_races_by_hitting_the_end_point()
+    {
+        $count = 5;
+        Race::factory()->count($count)->create();
+
+        $this->get(route('races.latest', ['count' => $count]))
+            ->assertStatus(200)
+            ->assertSee(['videos', 'series', 'season', 'track'])
+            ->assertJsonCount($count);
+    }
 }

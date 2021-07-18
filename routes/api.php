@@ -27,6 +27,7 @@ Route::group(['middleware' => ['api']], function() {
 
     //Race
     Route::get('/races', [\App\Http\Controllers\RaceController::class, 'index'])->name('races.index');
+    Route::get('/races/latest/{count}', [\App\Http\Controllers\RaceController::class, 'latest'])->name('races.latest');
     Route::get('/races/{race}', [\App\Http\Controllers\RaceController::class, 'show'])->name('races.show');
 
 
