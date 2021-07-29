@@ -21,6 +21,7 @@ class RaceController extends Controller
     public function latest(int $count)
     {
         return Race::with(['track', 'series', 'season', 'videos.platform'])
+                    ->has('videos')
                     ->latest()
                     ->take($count)
                     ->get();

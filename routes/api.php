@@ -19,40 +19,34 @@ Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login'])->n
 Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register'])->name('register');
 Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 
-Route::group(['middleware' => ['api']], function() {
+//Series
+Route::get('/series', [\App\Http\Controllers\SeriesController::class, 'index'])->name('series.index');
+Route::get('/series/{series}', [\App\Http\Controllers\SeriesController::class, 'show'])->name('series.show');
 
-    //Series
-    Route::get('/series', [\App\Http\Controllers\SeriesController::class, 'index'])->name('series.index');
-    Route::get('/series/{series}', [\App\Http\Controllers\SeriesController::class, 'show'])->name('series.show');
-
-    //Race
-    Route::get('/races', [\App\Http\Controllers\RaceController::class, 'index'])->name('races.index');
-    Route::get('/races/latest/{count}', [\App\Http\Controllers\RaceController::class, 'latest'])->name('races.latest');
-    Route::get('/races/{race}', [\App\Http\Controllers\RaceController::class, 'show'])->name('races.show');
+//Race
+Route::get('/races', [\App\Http\Controllers\RaceController::class, 'index'])->name('races.index');
+Route::get('/races/latest/{count}', [\App\Http\Controllers\RaceController::class, 'latest'])->name('races.latest');
+Route::get('/races/{race}', [\App\Http\Controllers\RaceController::class, 'show'])->name('races.show');
 
 
+//Auth Group
+Route::middleware(['auth:api'])->group(function () {
+    //User
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    })->name('user.index');
 
-    //Auth Group
-    Route::group(['middleware' => ['auth']], function() {
-        //User
-        Route::get('/user', function (Request $request) {
-            return $request->user();
-        })->name('user.index');
+    //Cars
+    Route::get('/series/{series}/cars', [\App\Http\Controllers\SeriesCarsController::class, 'show']);
 
-        //Cars
-        Route::get('/series/{series}/cars', [\App\Http\Controllers\SeriesCarsController::class, 'show']);
+    //Leagues
+    Route::get('/leagues', [\App\Http\Controllers\LeaguesController::class, 'index'])->name('leagues.index');
+    Route::get('/leagues/{league}', [\App\Http\Controllers\LeaguesController::class, 'show'])->name('leagues.show');
 
-        //Leagues
-        Route::get('/leagues', [\App\Http\Controllers\LeaguesController::class, 'index'])->name('leagues.index');
-        Route::get('/leagues/{league}', [\App\Http\Controllers\LeaguesController::class, 'show'])->name('leagues.show');
+    //CurrentPicks
+    Route::get('/leagues/{league}/current-picks', [\App\Http\Controllers\CurrentPickLeagueController::class, 'show']);
+    Route::post('/current-picks', [\App\Http\Controllers\CurrentPickLeagueController::class, 'store']);
 
-        //CurrentPicks
-        Route::get('/leagues/{league}/current-picks', [\App\Http\Controllers\CurrentPickLeagueController::class, 'show']);
-        Route::post('/current-picks', [\App\Http\Controllers\CurrentPickLeagueController::class, 'store']);
-
-        //RaceResults
-        Route::get('/race-results/league/{league}/user/{user}', [\App\Http\Controllers\RaceResultsController::class, 'show']);
-    });
+    //RaceResults
+    Route::get('/race-results/league/{league}/user/{user}', [\App\Http\Controllers\RaceResultsController::class, 'show']);
 });
-
-

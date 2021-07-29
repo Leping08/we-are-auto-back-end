@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property integer $id
  * @property string $name
+ * @property string $full_name
+ * @property string $logo
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property Carbon $deleted_at
@@ -34,6 +36,8 @@ class Series extends Model
      */
     protected $fillable = [
         'name',
+        'full_name',
+        'logo'
     ];
 
     /**
