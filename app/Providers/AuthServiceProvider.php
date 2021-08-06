@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\League;
+use App\Models\VideoProgress;
 use App\Policies\LeaguesPolicy;
+use App\Policies\VideoProgressPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Passport\Passport;
@@ -16,7 +18,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        League::class => LeaguesPolicy::class
+        League::class => LeaguesPolicy::class,
+        VideoProgress::class => VideoProgressPolicy::class,
     ];
 
     /**

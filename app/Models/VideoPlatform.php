@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -22,12 +23,30 @@ class VideoPlatform extends Model
 {
     use HasFactory, SoftDeletes;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'name'
     ];
 
-    public function videos()
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'id' => 'integer',
+        'name' => 'string',
+    ];
+
+    /**
+     * @return HasMany
+     */
+    public function videos(): HasMany
     {
-        $this->hasMany(Video::class);
+        return $this->hasMany(Video::class);
     }
 }

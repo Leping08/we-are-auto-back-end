@@ -5,10 +5,11 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\Models\Series
+ * App\Models\Track
  *
  * @property integer $id
  * @property string $name
@@ -41,7 +42,10 @@ class Track extends Model
     ];
 
 
-    public function races()
+    /**
+     * @return HasMany
+     */
+    public function races(): HasMany
     {
         return $this->hasMany(Race::class);
     }

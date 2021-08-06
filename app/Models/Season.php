@@ -5,7 +5,9 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * App\Models\Series
@@ -41,10 +43,14 @@ class Season extends Model
      */
     protected $casts = [
         'id' => 'integer',
+        'active' => 'boolean'
     ];
 
 
-    public function races()
+    /**
+     * @return HasMany
+     */
+    public function races(): HasMany
     {
         return $this->hasMany(Race::class);
     }
@@ -52,11 +58,11 @@ class Season extends Model
     /**
      * Scope a query to only include one season.
      *
+     * @param  Builder  $query
+     * @return Builder
      * @see activeSeason
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeActiveSeason($query)
+    public function scopeActiveSeason(Builder $query): Builder
     {
         return $query->where('active', true);
     }

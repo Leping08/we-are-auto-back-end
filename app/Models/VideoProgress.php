@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Scopes\UserScope;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -9,25 +10,25 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * App\Models\Result
+ * App\Models\VideoProgress
  *
  * @property integer $id
- * @property integer $car_id
- * @property integer $race_id
- * @property integer $car_class_id
- * @property integer $start_position
- * @property integer $end_position
+ * @property integer $video_id
+ * @property integer $user_id
+ * @property integer $percentage
+ * @property integer $seconds
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property Carbon $deleted_at
- * @property-read Race $race
- * @property-read Car $car
- * @property-read CarClass $car_class
+ * @property-read Video $video
+ * @property-read User $user
  */
 
-class Result extends Model
+class VideoProgress extends Model
 {
     use HasFactory, SoftDeletes;
+
+    protected $table = "video_progress";
 
     /**
      * The attributes that are mass assignable.
@@ -35,11 +36,10 @@ class Result extends Model
      * @var array
      */
     protected $fillable = [
-        'start_position',
-        'end_position',
-        'car_id',
-        'race_id',
-        'car_class_id'
+        'video_id',
+        'user_id',
+        'percentage',
+        'seconds'
     ];
 
     /**
@@ -49,33 +49,32 @@ class Result extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'car_id' => 'integer',
-        'race_id' => 'integer',
-        'car_class_id' => 'integer',
+        'video_id' => 'integer',
+        'user_id' => 'integer',
+        'percentage' => 'integer',
+        'seconds' => 'integer',
     ];
 
-
-    /**
-     * @return BelongsTo
-     */
-    public function car(): BelongsTo
+    protected static function booted()
     {
-        return $this->belongsTo(Car::class);
+        parent::boot();
+
+        static::addGlobalScope(new UserScope());
     }
 
     /**
      * @return BelongsTo
      */
-    public function race(): BelongsTo
+    public function video(): BelongsTo
     {
-        return $this->belongsTo(Race::class);
+        return $this->belongsTo(Video::class);
     }
 
     /**
      * @return BelongsTo
      */
-    public function car_class(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(CarClass::class);
+        return $this->belongsTo(Video::class);
     }
 }

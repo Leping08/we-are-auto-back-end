@@ -5,6 +5,8 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -50,27 +52,42 @@ class Series extends Model
     ];
 
 
-    public function cars()
+    /**
+     * @return HasMany
+     */
+    public function cars(): HasMany
     {
         return $this->hasMany(Car::class);
     }
 
-    public function races()
+    /**
+     * @return HasMany
+     */
+    public function races(): HasMany
     {
         return $this->hasMany(Race::class);
     }
 
+    /**
+     * @return mixed
+     */
     public function active_season_races()
     {
         return $this->hasMany(Race::class)->activeSeason();
     }
 
-    public function leagues()
+    /**
+     * @return HasMany
+     */
+    public function leagues(): HasMany
     {
         return $this->hasMany(League::class);
     }
 
-    public function car_classes()
+    /**
+     * @return BelongsToMany
+     */
+    public function car_classes(): BelongsToMany
     {
         return $this->belongsToMany(CarClass::class, Car::class);
     }

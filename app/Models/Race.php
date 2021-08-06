@@ -3,8 +3,12 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -16,8 +20,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer $series_id
  * @property integer $track_id
  * @property integer $season_id
- * @property Carbon starts_at
- * @property Carbon finishes_at
+ * @property Carbon $starts_at
+ * @property Carbon $finishes_at
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property Carbon $deleted_at
@@ -63,41 +67,66 @@ class Race extends Model
     ];
 
 
-    public function series()
+    /**
+     * @return BelongsTo
+     */
+    public function series(): BelongsTo
     {
         return $this->belongsTo(Series::class);
     }
 
-    public function track()
+    /**
+     * @return BelongsTo
+     */
+    public function track(): BelongsTo
     {
         return $this->belongsTo(Track::class);
     }
 
-    public function season()
+    /**
+     * @return BelongsTo
+     */
+    public function season(): BelongsTo
     {
         return $this->belongsTo(Season::class);
     }
 
-    public function picks()
+    /**
+     * @return HasMany
+     */
+    public function picks(): HasMany
     {
         return $this->hasMany(Pick::class);
     }
 
-    public function results()
+    /**
+     * @return HasMany
+     */
+    public function results(): HasMany
     {
         return $this->hasMany(Result::class);
     }
 
-    public function cars()
+    /**
+     * @return BelongsToMany
+     */
+    public function cars(): BelongsToMany
     {
         return $this->belongsToMany(Car::class, 'results');
     }
 
-    public function videos()
+    /**
+     * @return HasMany
+     */
+    public function videos(): HasMany
     {
         return $this->hasMany(Video::class);
     }
 
+    /**
+     * @param  User  $user
+     * @return array
+     */
     public function user_results(User $user)
     {
         return $this->hasMany(Pick::class)
@@ -118,11 +147,11 @@ class Race extends Model
     /**
      * Scope a query to only include one season.
      *
+     * @param  Builder  $query
+     * @return Builder
      * @see activeSeason
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeActiveSeason($query)
+    public function scopeActiveSeason(Builder $query): Builder
     {
         $activeSeason = Season::activeSeason()->first();
         return $query->where('season_id', $activeSeason->id);

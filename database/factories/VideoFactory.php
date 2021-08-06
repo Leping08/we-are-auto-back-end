@@ -30,6 +30,7 @@ class VideoFactory extends Factory
             'video_id' => $this->faker->lexify('????????'),
             'video_platform_id' => VideoPlatform::factory(),
             'start_time' => $this->faker->numberBetween(1,100),
+            'end_time' => $this->faker->numberBetween(101,200),
             'race_id' => VideoPlatform::factory(),
         ];
     }

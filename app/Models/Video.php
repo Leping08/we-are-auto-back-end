@@ -5,6 +5,8 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -15,6 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer $video_platform_id
  * @property integer $race_id
  * @property integer $start_time
+ * @property integer $end_time
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property Carbon $deleted_at
@@ -35,6 +38,7 @@ class Video extends Model
         'video_id',
         'video_platform_id',
         'start_time',
+        'end_time',
         'race_id',
     ];
 
@@ -47,17 +51,32 @@ class Video extends Model
         'id' => 'integer',
         'video_id' => 'string',
         'video_platform_id' => 'integer',
-        'start_time' => 'integer',
         'race_id' => 'integer',
+        'start_time' => 'integer',
+        'end_time' => 'integer'
     ];
 
-    public function race()
+    /**
+     * @return BelongsTo
+     */
+    public function race(): BelongsTo
     {
         return $this->belongsTo(Race::class);
     }
 
-    public function platform()
+    /**
+     * @return BelongsTo
+     */
+    public function video_platform(): BelongsTo
     {
-        return $this->belongsTo(VideoPlatform::class);
+        return $this->belongsTo(VideoPlatform::class, 'video_platform_id');
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function video_progress(): HasMany
+    {
+        return $this->hasMany(VideoProgress::class, 'video_id', 'id');
     }
 }

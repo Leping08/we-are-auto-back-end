@@ -5,6 +5,8 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -55,16 +57,31 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
+        'id' => 'integer',
         'email_verified_at' => 'datetime',
     ];
 
-    public function leagues()
+    /**
+     * @return BelongsToMany
+     */
+    public function leagues(): BelongsToMany
     {
         return $this->belongsToMany(League::class);
     }
 
-    public function current_picks()
+    /**
+     * @return BelongsToMany
+     */
+    public function current_picks(): BelongsToMany
     {
         return $this->belongsToMany(CurrentPick::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function video_progress(): HasMany
+    {
+        return $this->hasMany(VideoProgress::class);
     }
 }

@@ -2,10 +2,29 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Auth;
+
+/**
+ * App\Models\Pick
+ *
+ * @property integer $id
+ * @property integer $car_id
+ * @property integer $race_id
+ * @property integer $user_id
+ * @property integer $league_id
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ * @property Carbon $deleted_at
+ * @property-read Race $race
+ * @property-read Car $car
+ * @property-read User $user
+ * @property-read League $league
+ */
 
 class Pick extends Model
 {
@@ -43,26 +62,41 @@ class Pick extends Model
      */
     protected $appends = ['result'];
 
-    public function race()
+    /**
+     * @return BelongsTo
+     */
+    public function race(): BelongsTo
     {
         return $this->belongsTo(Race::class);
     }
 
-    public function car()
+    /**
+     * @return BelongsTo
+     */
+    public function car(): BelongsTo
     {
         return $this->belongsTo(Car::class);
     }
 
-    public function user()
+    /**
+     * @return BelongsTo
+     */
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function league()
+    /**
+     * @return BelongsTo
+     */
+    public function league(): BelongsTo
     {
         return $this->belongsTo(League::class);
     }
 
+    /**
+     * @return Model|HasOne|object|null
+     */
     public function getResultAttribute()
     {
         return $this->hasOne(Result::class, 'race_id', 'race_id')
