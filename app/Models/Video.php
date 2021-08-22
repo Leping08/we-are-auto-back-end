@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -67,7 +68,7 @@ class Video extends Model
     /**
      * @return BelongsTo
      */
-    public function video_platform(): BelongsTo
+    public function platform(): BelongsTo
     {
         return $this->belongsTo(VideoPlatform::class, 'video_platform_id');
     }
@@ -78,5 +79,13 @@ class Video extends Model
     public function video_progress(): HasMany
     {
         return $this->hasMany(VideoProgress::class, 'video_id', 'id');
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function progress(): HasOne
+    {
+        return $this->hasOne(VideoProgress::class, 'video_id', 'id')->latest();
     }
 }
