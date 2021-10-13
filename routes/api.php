@@ -50,6 +50,9 @@ Route::middleware(['auth:api'])->group(function () {
     //RaceResults
     Route::get('/race-results/league/{league}/user/{user}', [\App\Http\Controllers\RaceResultsController::class, 'show']);
 
+    //Suggestion
+    Route::post('/races/suggestion', [\App\Http\Controllers\RaceSuggestionController::class, 'store'])->name('race.suggestion.store');
+
     //Video Progress
     Route::post('/video-progress', [\App\Http\Controllers\VideoProgressController::class, 'store'])->name('video-progress.store');
 });
