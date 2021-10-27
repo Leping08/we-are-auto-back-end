@@ -7,7 +7,6 @@ namespace Tests\Api;
 use App\Models\Race;
 use App\Models\RaceSuggestion;
 use App\Models\User;
-use App\Models\Video;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Passport\Passport;
@@ -26,8 +25,14 @@ class RaceSuggestionTest extends TestCase
         $data = [
             'race_id' => $race->id,
             'data' => [
-                'part_1' => 'https://youtube.com/fdsfdsfds',
-                'part_2' => 'https://youtube.com/gkfdiugfd'
+                [
+                    'part' => 1,
+                    'link' => 'https://youtube.com/zzzzzz'
+                ],
+                [
+                    'part' => 2,
+                    'link' => 'https://youtube.com/fffffff'
+                ]
             ]
         ];
 
@@ -50,8 +55,14 @@ class RaceSuggestionTest extends TestCase
         $data = [
             'race_id' => $race->id,
             'data' => [
-                'part_1' => 'https://youtube.com/fdsfdsfds',
-                'part_2' => 'https://youtube.com/gkfdiugfd'
+                [
+                    'part' => 1,
+                    'link' => 'https://youtube.com/zzzzzz'
+                ],
+                [
+                    'part' => 2,
+                    'link' => 'https://youtube.com/fffffff'
+                ]
             ]
         ];
 
