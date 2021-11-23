@@ -23,6 +23,9 @@ Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])-
 Route::get('/series', [\App\Http\Controllers\SeriesController::class, 'index'])->name('series.index');
 Route::get('/series/{series}', [\App\Http\Controllers\SeriesController::class, 'show'])->name('series.show');
 
+//SeriesSeason
+Route::get('/series/{series}/season/{season}', [\App\Http\Controllers\SeriesSeasonController::class, 'show'])->name('series_season.show');
+
 //Race
 Route::get('/races', [\App\Http\Controllers\RaceController::class, 'index'])->name('races.index');
 Route::get('/races/latest/{count}', [\App\Http\Controllers\RaceController::class, 'latest'])->name('races.latest');
