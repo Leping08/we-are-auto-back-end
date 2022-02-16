@@ -85,11 +85,10 @@ jobs:
       run: |
         composer global require laravel/vapor-cli
 
-    - name: Install dependencies
-      run: |
-        php --version
-        composer config "http-basic.nova.laravel.com" "${{ secrets.NOVA_USERNAME }}" "${{ secrets.NOVA_PASSWORD }}"
-        composer install -n --prefer-dist
+    - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+        env:
+          COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
 
     - name: Deploy Environment
       run: vapor deploy production
