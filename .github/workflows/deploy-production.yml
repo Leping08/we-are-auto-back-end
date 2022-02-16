@@ -85,7 +85,7 @@ jobs:
       run: |
         composer config "http-basic.nova.laravel.com" "${{ secrets.NOVA_USERNAME }}" "${{ secrets.NOVA_PASSWORD }}"
         composer global require laravel/vapor-cli
-        composer composer install --optimize-autoloader --no-dev
+        composer install --optimize-autoloader --no-dev
 
     - name: Deploy Environment
       run: vapor deploy production
