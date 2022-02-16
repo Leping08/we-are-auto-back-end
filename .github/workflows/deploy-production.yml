@@ -83,7 +83,7 @@ jobs:
 
     - name: Require Vapor CLI
       run: |
-        composer config "http-basic.nova.laravel.com" "${{ secrets.NOVA_USERNAME }}" "${{ secrets.NOVA_PASSWORD }}"
+        composer config http-basic.nova.laravel.com ${{ secrets.NOVA_USERNAME }} ${{ secrets.NOVA_PASSWORD }}
         composer global require laravel/vapor-cli
         composer install --optimize-autoloader --no-dev
 
