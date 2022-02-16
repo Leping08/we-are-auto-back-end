@@ -81,14 +81,11 @@ jobs:
         tools: composer:v2
         coverage: none
 
-    - name: Composer Install
-      run: |
-        composer install
-
     - name: Require Vapor CLI
       run: |
         composer config "http-basic.nova.laravel.com" "${{ secrets.NOVA_USERNAME }}" "${{ secrets.NOVA_PASSWORD }}"
         composer global require laravel/vapor-cli
+        composer install
 
     - name: Deploy Environment
       run: vapor deploy production
