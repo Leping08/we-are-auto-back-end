@@ -85,13 +85,11 @@ jobs:
       run: |
         composer global require laravel/vapor-cli
 
-    - name: "Setup CI Authentication"
+    - name: Install dependencies
       run: |
-        composer config http-basic.nova.laravel.com "${{ secrets.NOVA_USERNAME }}" "${{ secrets.NOVA_PASSWORD }}"
-
-    - name: Run Composer Install
-      run: |
-        composer install --optimize-autoloader --no-dev
+        php --version
+        composer config "http-basic.nova.laravel.com" "${{ secrets.NOVA_USERNAME }}" "${{ secrets.NOVA_PASSWORD }}"
+        composer install -n --prefer-dist
 
     - name: Deploy Environment
       run: vapor deploy production
