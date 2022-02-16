@@ -16,6 +16,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $name
  * @property string $full_name
  * @property string $logo
+ * @property string $image_url
+ * @property string $description
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property Carbon $deleted_at
@@ -25,6 +27,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read League $leagues
  * @property-read CarClass $car_classes
  * @property-read CarClass $unique_car_classes
+ * @property-read Season $seasons
  */
 
 class Series extends Model
@@ -39,7 +42,9 @@ class Series extends Model
     protected $fillable = [
         'name',
         'full_name',
-        'logo'
+        'logo',
+        'image_url',
+        'description',
     ];
 
     /**
@@ -98,5 +103,17 @@ class Series extends Model
     public function unique_car_classes()
     {
         return $this->car_classes->unique();
+    }
+
+    /**
+     * @see seasons
+     */
+    public function seasons()
+    {
+        $seasons = $this->races->unique('season_id')->pluck('season')->sortByDesc('id')->values();
+        return $seasons->map(function ($season) {
+            $season['races_count'] = $season->races()->count();
+            return $season;
+        });
     }
 }

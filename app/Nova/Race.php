@@ -24,7 +24,7 @@ class Race extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -33,6 +33,7 @@ class Race extends Resource
      */
     public static $search = [
         'id',
+        'name'
     ];
 
     /**
@@ -56,12 +57,9 @@ class Race extends Resource
 
             DateTime::make('Finishes at'),
 
-            BelongsTo::make('Series'),
-            BelongsTo::make('Track'),
             BelongsTo::make('Season'),
             BelongsTo::make('Series'),
             BelongsTo::make('Track'),
-            BelongsTo::make('Season'),
 
             BelongsToMany::make('Cars'),
             BelongsToMany::make('Leagues'),

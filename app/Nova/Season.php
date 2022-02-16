@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\HasMany;
 
@@ -21,7 +22,7 @@ class Season extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -45,6 +46,9 @@ class Season extends Resource
 
             Text::make('Name')
                 ->rules('required', 'string', 'max:400'),
+
+            Boolean::make('Active')
+                ->rules('required'),
 
             HasMany::make('Races'),
 

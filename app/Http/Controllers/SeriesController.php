@@ -9,11 +9,15 @@ class SeriesController extends Controller
 {
     public function index()
     {
-        return Series::all();
+        $series = Series::withCount('races')->get();
+        $series->map(function ($series) {
+            return $series['seasons'] = $series->seasons();
+        });
+        return $series->all();
     }
 
     public function show(Series $series)
     {
-        return $series::with(['cars.car_class'])->get();
+        return $series::with(['cars.car_class', 'seasons'])->get();
     }
 }

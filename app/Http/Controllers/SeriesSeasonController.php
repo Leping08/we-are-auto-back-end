@@ -10,7 +10,7 @@ class SeriesSeasonController extends Controller
 {
     public function show(Series $series, Season $season)
     {
-        return Race::with(['track', 'videos.platform', 'videos.progress'])
+        return Race::with(['track', 'series', 'videos.platform', 'videos.progress', 'season'])
             ->where('series_id', $series->id)
             ->where('season_id', $season->id)
             ->orderBy('starts_at', 'asc')

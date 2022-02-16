@@ -21,7 +21,7 @@ class Series extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -30,6 +30,8 @@ class Series extends Resource
      */
     public static $search = [
         'id',
+        'name',
+        'full_name'
     ];
 
     /**
@@ -45,6 +47,35 @@ class Series extends Resource
 
             Text::make('Name')
                 ->rules('required', 'string', 'max:400'),
+
+            Text::make('Full Name')
+                ->rules('required', 'string', 'max:1000'),
+
+            Text::make('Description')
+                ->rules('required', 'string', 'max:1000')
+                ->hideFromIndex(),
+
+            Text::make('Logo')
+                ->rules('required', 'string', 'max:1000')
+                ->hideFromIndex()
+                ->hideFromDetail(),
+
+            Text::make('Logo', function () {
+                return "<div class='flex items-center'><div class='w-1/4'><img src='{$this->logo}' style='max-width: 50%;'></div><div class='w-3/4'><a target='_blank' class='no-underline dim text-primary font-bold' href='{$this->logo}'>{$this->logo}</a></div></div>";
+            })
+                ->asHtml()
+                ->onlyOnDetail(),
+
+            Text::make('Image Url')
+                ->rules('required', 'string', 'max:1000')
+                ->hideFromIndex()
+                ->hideFromDetail(),
+
+            Text::make('Image Url', function () {
+                return "<div class='flex items-center'><div class='w-1/4'><img src='{$this->image_url}' style='max-width: 50%;'></div><div class='w-3/4'><a target='_blank' class='no-underline dim text-primary font-bold' href='{$this->image_url}'>{$this->image_url}</a></div></div>";
+            })
+                ->asHtml()
+                ->onlyOnDetail(),
 
             HasMany::make('Cars'),
             HasMany::make('Races'),

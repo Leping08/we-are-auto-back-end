@@ -25,7 +25,9 @@ class SeriesFactory extends Factory
         return [
             'name' => $this->faker->word,
             'full_name' => $this->faker->word,
-            'logo' => $this->faker->imageUrl
+            'logo' => $this->faker->imageUrl,
+            'image_url' => $this->faker->imageUrl,
+            'description' => $this->faker->paragraph,
         ];
     }
 }

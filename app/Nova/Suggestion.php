@@ -2,26 +2,29 @@
 
 namespace App\Nova;
 
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Code;
+use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Track extends Resource
+class Suggestion extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Track::class;
+    public static $model = \App\Models\RaceSuggestion::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -30,7 +33,6 @@ class Track extends Resource
      */
     public static $search = [
         'id',
-        'name'
     ];
 
     /**
@@ -42,14 +44,11 @@ class Track extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
-
-            Text::make('Name')
-                ->rules('required', 'string', 'max:400'),
-
-            HasMany::make('Races'),
-
-
+            ID::make(__('ID'), 'id')->sortable(),
+            BelongsTo::make('Race'),
+            BelongsTo::make('User'),
+            Boolean::make('Processed', 'processed'),
+            Code::make('Data', 'data')->json()
         ];
     }
 

@@ -48,7 +48,7 @@ class RaceSuggestion extends Model
         'id' => 'integer',
         'race_id' => 'integer',
         'user_id' => 'integer',
-        'processed' => 'new',
+        'processed' => 'boolean',
         'data' => 'array'
     ];
 
