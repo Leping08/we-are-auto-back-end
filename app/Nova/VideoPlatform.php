@@ -2,23 +2,19 @@
 
 namespace App\Nova;
 
-use App\Models\Season;
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\DateTime;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Race extends Resource
+class VideoPlatform extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Race::class;
+    public static $model = \App\Models\VideoPlatform::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -46,39 +42,8 @@ class Race extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
-
+            ID::make(__('ID'), 'id')->sortable(),
             Text::make('Name')
-                ->rules('required', 'string', 'max:500'),
-
-            Text::make('Length')
-                ->rules('string', 'max:500'),
-
-            DateTime::make('Starts at')
-                ->hideFromIndex(),
-            DateTime::make('Finishes at')
-                ->hideFromIndex(),
-
-            BelongsTo::make('Season')
-                ->withMeta([
-                    'belongsToId' => $this->season_id ?? Season::ActiveSeason()->first()->id
-                ])
-                ->sortable()
-                ->hideFromIndex(),
-            BelongsTo::make('Series')
-                ->searchable(),
-            BelongsTo::make('Track')
-                ->searchable(),
-
-            HasMany::make('Videos'),
-
-            BelongsToMany::make('Cars'),
-            BelongsToMany::make('Leagues'),
-
-            HasMany::make('Results'),
-            HasMany::make('Picks'),
-
-
         ];
     }
 

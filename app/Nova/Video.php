@@ -2,30 +2,27 @@
 
 namespace App\Nova;
 
-use App\Models\Season;
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Race extends Resource
+class Video extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Race::class;
+    public static $model = \App\Models\Video::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'video_id';
 
     /**
      * The columns that should be searched.
@@ -34,7 +31,7 @@ class Race extends Resource
      */
     public static $search = [
         'id',
-        'name'
+        'video_id'
     ];
 
     /**
@@ -46,38 +43,22 @@ class Race extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
-
-            Text::make('Name')
-                ->rules('required', 'string', 'max:500'),
-
-            Text::make('Length')
-                ->rules('string', 'max:500'),
-
-            DateTime::make('Starts at')
-                ->hideFromIndex(),
-            DateTime::make('Finishes at')
-                ->hideFromIndex(),
-
-            BelongsTo::make('Season')
+            ID::make(__('ID'), 'id')->sortable(),
+            Text::make('Youtube Video Id', 'video_id')->placeholder('bI06z2bD56E')->rules('required', 'string', 'max:255'),
+            BelongsTo::make('Video Platform', 'platform', VideoPlatform::class)
                 ->withMeta([
-                    'belongsToId' => $this->season_id ?? Season::ActiveSeason()->first()->id
+                    'belongsToId' => $this->video_platform_id ?? 1
                 ])
                 ->sortable()
                 ->hideFromIndex(),
-            BelongsTo::make('Series')
+            BelongsTo::make('Race')
                 ->searchable(),
-            BelongsTo::make('Track')
-                ->searchable(),
-
-            HasMany::make('Videos'),
-
-            BelongsToMany::make('Cars'),
-            BelongsToMany::make('Leagues'),
-
-            HasMany::make('Results'),
-            HasMany::make('Picks'),
-
+            Text::make('Start time in seconds', 'start_time')
+                ->placeholder('250')
+                ->hideFromIndex(),
+            Text::make('End time in seconds', 'end_time')
+                ->placeholder('4000')
+                ->hideFromIndex(),
 
         ];
     }

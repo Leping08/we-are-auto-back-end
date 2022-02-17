@@ -77,8 +77,8 @@ class Series extends Resource
                 ->asHtml()
                 ->onlyOnDetail(),
 
-            HasMany::make('Cars'),
             HasMany::make('Races'),
+            HasMany::make('Cars'),
 
 
         ];
