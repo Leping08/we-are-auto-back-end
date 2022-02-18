@@ -110,7 +110,7 @@ class Series extends Model
      */
     public function seasons()
     {
-        $seasons = $this->races->unique('season_id')->pluck('season')->sortByDesc('id')->values();
+        $seasons = $this->races->unique('season_id')->pluck('season')->sortByDesc('name')->values();
         return $seasons->map(function ($season) {
             $season['races_count'] = $season->races()->count();
             return $season;
