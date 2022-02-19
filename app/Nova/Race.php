@@ -63,8 +63,7 @@ class Race extends Resource
                 ->withMeta([
                     'belongsToId' => $this->season_id ?? Season::ActiveSeason()->first()->id
                 ])
-                ->sortable()
-                ->hideFromIndex(),
+                ->sortable(),
             BelongsTo::make('Series')
                 ->searchable(),
             BelongsTo::make('Track')
