@@ -37,11 +37,22 @@ class AuthController extends Controller
             'password' => ['required', 'min:6', 'max:30', 'confirmed']
         ]);
 
-        return User::create([
+        User::create([
             'name' => $request->get('name'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password'))
         ]);
+
+        $response = Http::asForm()->post(config('auth.oauth.base_url') . '/oauth/token', [
+            'grant_type' => config('auth.oauth.grant_type'),
+            'client_id' => config('auth.oauth.client_id'),
+            'client_secret' => config('auth.oauth.client_secret'),
+            'username' => $request->get('email'),
+            'password' => $request->get('password'),
+            'scope' => '*',
+        ]);
+
+        return $response->json();
 
         //TODO send email verification email
     }
