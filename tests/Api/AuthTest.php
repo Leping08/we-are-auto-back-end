@@ -54,12 +54,7 @@ class AuthTest extends TestCase
         ]);
 
         $response = $this->json('POST', route('register'), $data);
-        $response->assertStatus(201);
-        $response->assertSee([
-            'name' => $data['name'],
-            'email' => $data['email']
-        ]);
-
+        $response->assertStatus(200);
         $this->assertDatabaseHas('users', [
             'name' => $data['name'],
             'email' => $data['email']

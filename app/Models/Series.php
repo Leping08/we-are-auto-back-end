@@ -106,6 +106,14 @@ class Series extends Model
     }
 
     /**
+     * @return BelongsToMany
+     */
+    public function users_following(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'follow_series');
+    }
+
+    /**
      * @see seasons
      */
     public function seasons()

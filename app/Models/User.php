@@ -24,6 +24,8 @@ use Laravel\Passport\HasApiTokens;
  * @property Carbon $deleted_at
  * @property-read League $leagues
  * @property-read CurrentPick $current_picks
+ * @property-read VideoProgress $video_progress
+ * @property-read FollowSeries $series_following
  */
 
 class User extends Authenticatable
@@ -79,9 +81,19 @@ class User extends Authenticatable
 
     /**
      * @return HasMany
+     * @method video_progress()
      */
     public function video_progress(): HasMany
     {
         return $this->hasMany(VideoProgress::class);
+    }
+
+    /**
+     * @return BelongsToMany
+     * @method series_following()
+     */
+    public function series_following(): BelongsToMany
+    {
+        return $this->belongsToMany(Series::class, 'follow_series');
     }
 }
