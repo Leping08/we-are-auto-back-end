@@ -9,7 +9,7 @@ class SeriesController extends Controller
 {
     public function index()
     {
-        $series = Series::withCount('races')->get();
+        $series = Series::withCount('races')->orderBy('name')->get();
         $series->map(function ($series) {
             return $series['seasons'] = $series->seasons();
         });

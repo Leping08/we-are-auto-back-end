@@ -13,12 +13,13 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.3",
         "laravel/framework": "^8.12",
+        "laravel/nova": "~3.0",
         "laravel/passport": "^10.1",
         "laravel/tinker": "^2.5",
         "laravel/vapor-core": "^2.12",
         "paquettg/php-html-parser": "^3.1",
-        "spatie/simple-excel": "^1.13",
-        "laravel/nova": "~3.0"
+        "spatie/laravel-permission": "^5.5",
+        "spatie/simple-excel": "^1.13"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
