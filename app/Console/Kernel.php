@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Jobs\SendFollowedSeriesEmails;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -24,7 +25,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->call(function () {
+            SendFollowedSeriesEmails::dispatch();
+        })->weeklyOn(4, '10:00'); // Thursday at 10:00 AM
     }
 
     /**

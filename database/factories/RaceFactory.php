@@ -31,8 +31,8 @@ class RaceFactory extends Factory
             'series_id' => Series::factory(),
             'track_id' => Track::factory(),
             'season_id' => Season::factory(),
-            'starts_at' => $this->faker->dateTime(),
-            'finishes_at' => $this->faker->dateTime(),
+            'starts_at' => $this->faker->dateTimeBetween('-7 days', 'now'),
+            'finishes_at' => $this->faker->dateTimeBetween('-7 days', 'now'),
         ];
     }
 }
