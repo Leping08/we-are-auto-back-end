@@ -110,7 +110,7 @@ class Series extends Model
      */
     public function users_following(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'follow_series');
+        return $this->belongsToMany(User::class, 'follow_series')->withTimestamps();
     }
 
     /**

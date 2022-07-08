@@ -52,7 +52,7 @@ class FollowedSeriesEmailTest extends TestCase
         $this->assertCount(0, FollowSeries::all());
 
         $this->post(route('follow.series.store'), $data)
-            ->assertStatus(302);
+            ->assertStatus(201);
 
         $this->assertCount(1, FollowSeries::all());
 
@@ -107,7 +107,7 @@ class FollowedSeriesEmailTest extends TestCase
         $this->assertCount(0, FollowSeries::all());
 
         $this->post(route('follow.series.store'), $data)
-            ->assertStatus(302);
+            ->assertStatus(201);
 
         $this->assertCount(1, FollowSeries::all());
 
@@ -162,7 +162,7 @@ class FollowedSeriesEmailTest extends TestCase
         $this->assertCount(0, FollowSeries::all());
 
         $this->post(route('follow.series.store'), $data)
-            ->assertStatus(302);
+            ->assertStatus(201);
 
         $this->assertCount(1, FollowSeries::all());
 
@@ -218,7 +218,7 @@ class FollowedSeriesEmailTest extends TestCase
         $this->assertCount(0, FollowSeries::all());
 
         $this->post(route('follow.series.store'), $data)
-            ->assertStatus(302);
+            ->assertStatus(201);
 
         $this->assertCount(1, FollowSeries::all());
 
@@ -280,7 +280,7 @@ class FollowedSeriesEmailTest extends TestCase
         $this->assertCount(0, FollowSeries::all());
 
         $this->post(route('follow.series.store'), $data)
-            ->assertStatus(302);
+            ->assertStatus(201);
 
         $this->assertCount(1, FollowSeries::all());
 

@@ -95,6 +95,6 @@ class User extends Authenticatable
      */
     public function series_following(): BelongsToMany
     {
-        return $this->belongsToMany(Series::class, 'follow_series');
+        return $this->belongsToMany(Series::class, 'follow_series')->withTimestamps();
     }
 }

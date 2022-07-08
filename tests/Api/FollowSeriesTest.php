@@ -34,7 +34,7 @@ class FollowSeriesTest extends TestCase
         $this->assertCount(0, FollowSeries::all());
 
         $this->post(route('follow.series.store'), $data)
-            ->assertStatus(302);
+            ->assertStatus(201);
 
         $this->assertCount(1, FollowSeries::all());
 
@@ -43,6 +43,38 @@ class FollowSeriesTest extends TestCase
 
         $this->assertTrue($user->series_following->contains($series));
         $this->assertTrue($series->users_following->contains($user));
+    }
+
+    /** @test */
+    public function a_authenticated_user_can_unfollow_a_series()
+    {
+        $user = User::factory()->create();
+        Passport::actingAs($user);
+
+        $series = Series::factory()->create();
+
+        $data = [
+            'series_id' => $series->id,
+            'user_id' => $user->id
+        ];
+
+        $this->assertCount(0, FollowSeries::all());
+
+        $this->post(route('follow.series.store'), $data)
+            ->assertStatus(201);
+
+        $this->assertCount(1, FollowSeries::all());
+
+        $this->post(route('follow.series.store'), $data)
+            ->assertStatus(201);
+
+        $this->assertCount(0, FollowSeries::all());
+
+        $user->fresh();
+        $series->fresh();
+
+        $this->assertFalse($user->series_following->contains($series));
+        $this->assertFalse($series->users_following->contains($user));
     }
 
     /** @test */
@@ -85,7 +117,7 @@ class FollowSeriesTest extends TestCase
         $this->assertCount(0, FollowSeries::all());
 
         $this->post(route('follow.series.store'), $data)
-            ->assertStatus(302);
+            ->assertStatus(201);
 
         $this->assertCount(1, FollowSeries::all());
 

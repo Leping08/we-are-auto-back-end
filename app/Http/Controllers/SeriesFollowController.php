@@ -46,15 +46,17 @@ class SeriesFollowController extends Controller
             ->get();
 
         if ($followSeries->count() > 0) {
+            // need to unfollow the series
+            $followSeries->first()->delete();
             return response()->json([
-                'message' => 'You are already following this series.'
-            ], 400);
+                'message' => 'Series unfollowed successfully',
+            ], 201);
         }
 
         $authUser->series_following()->attach($series);
 
         return response()->json([
             'message' => 'Series followed successfully',
-        ], 302);
+        ], 201);
     }
 }
