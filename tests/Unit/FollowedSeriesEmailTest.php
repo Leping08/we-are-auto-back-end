@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Unit;
 
 use App\Jobs\SendFollowedSeriesEmails;
 use App\Mail\FollowedSeries;
