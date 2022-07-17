@@ -115,4 +115,10 @@ return [
         ],
     ],
 
+    'addresses' => [
+        'admin' => [
+            'derek@deltavcreative.com'
+        ]
+    ]
+
 ];
