@@ -26,6 +26,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read League $leagues
  * @property-read CurrentPick $current_picks
  * @property-read VideoProgress $video_progress
+ * @property-read RaceProblem $race_problems
  * @property-read FollowSeries $series_following
  */
 
@@ -87,6 +88,15 @@ class User extends Authenticatable
     public function video_progress(): HasMany
     {
         return $this->hasMany(VideoProgress::class);
+    }
+
+    /**
+     * @return HasMany
+     * @method race_problems()
+     */
+    public function race_problems(): HasMany
+    {
+        return $this->hasMany(RaceProblem::class);
     }
 
     /**

@@ -31,6 +31,7 @@ Route::get('/races', [\App\Http\Controllers\RaceController::class, 'index'])->na
 Route::get('/races/latest/{count}', [\App\Http\Controllers\RaceController::class, 'latest'])->name('races.latest');
 Route::get('/races/{race}', [\App\Http\Controllers\RaceController::class, 'show'])->name('races.show');
 
+Route::post('/race-problem', [\App\Http\Controllers\RaceProblemController::class, 'store'])->name('race-problem.store');
 
 //Auth Group
 Route::middleware(['auth:api'])->group(function () {

@@ -70,6 +70,7 @@ class Race extends Resource
                 ->searchable(),
 
             HasMany::make('Videos'),
+            HasMany::make('Problems', 'race_problems', RaceProblem::class),
 
             BelongsToMany::make('Cars'),
             BelongsToMany::make('Leagues'),

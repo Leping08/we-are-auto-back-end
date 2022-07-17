@@ -29,6 +29,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read Series $series
  * @property-read Track $track
  * @property-read Season $season
+ * @property-read RaceProblems $race_problems
  * @property-read Video $videos
  */
 
@@ -108,6 +109,14 @@ class Race extends Model
     }
 
     /**
+     * @return HasMany
+     */
+    public function race_problems(): HasMany
+    {
+        return $this->hasMany(RaceProblem::class);
+    }
+
+    /**
      * @return BelongsToMany
      */
     public function cars(): BelongsToMany
@@ -121,6 +130,14 @@ class Race extends Model
     public function videos(): HasMany
     {
         return $this->hasMany(Video::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function problems(): HasMany
+    {
+        return $this->hasMany(RaceProblem::class);
     }
 
     /**
