@@ -38,8 +38,8 @@ class FollowSeriesTest extends TestCase
 
         $this->assertCount(1, FollowSeries::all());
 
-        $user->fresh();
-        $series->fresh();
+        $user->refresh();
+        $series->refresh();
 
         $this->assertTrue($user->series_following->contains($series));
         $this->assertTrue($series->users_following->contains($user));
@@ -70,8 +70,8 @@ class FollowSeriesTest extends TestCase
 
         $this->assertCount(0, FollowSeries::all());
 
-        $user->fresh();
-        $series->fresh();
+        $user->refresh();
+        $series->refresh();
 
         $this->assertFalse($user->series_following->contains($series));
         $this->assertFalse($series->users_following->contains($user));

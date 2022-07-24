@@ -36,9 +36,8 @@ Route::post('/race-problem', [\App\Http\Controllers\RaceProblemController::class
 //Auth Group
 Route::middleware(['auth:api'])->group(function () {
     //User
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    })->name('user.index');
+    Route::get('/user/me', [\App\Http\Controllers\UserController::class, 'show'])->name('user.show');
+    Route::post('/user/{user}', [\App\Http\Controllers\UserController::class, 'update'])->name('user.update');
 
     //Cars
     Route::get('/series/{series}/cars', [\App\Http\Controllers\SeriesCarsController::class, 'show']);
@@ -61,6 +60,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/video-progress', [\App\Http\Controllers\VideoProgressController::class, 'store'])->name('video-progress.store');
 
     // Follow Series
+    Route::post('/follow-series', [\App\Http\Controllers\SeriesFollowController::class, 'index'])->name('follow.series.index');
     Route::get('/follow-series/{series}', [\App\Http\Controllers\SeriesFollowController::class, 'show'])->name('follow.series.show');
     Route::post('/follow-series', [\App\Http\Controllers\SeriesFollowController::class, 'store'])->name('follow.series.store');
 });
