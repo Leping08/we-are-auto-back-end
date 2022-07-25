@@ -114,6 +114,11 @@ class AuthController extends Controller
                 'password' => Hash::make($password)
             ]);
             $user->save();
+
+            $passportTokens = $user->tokens();
+            foreach($passportTokens as $token) {
+                $token->revoke();
+            }
         });
 
         if ($response === Password::PASSWORD_RESET) {
