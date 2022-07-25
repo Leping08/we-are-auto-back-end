@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Password;
 
 class AuthController extends Controller
 {
@@ -74,6 +75,27 @@ class AuthController extends Controller
             return response()->json([
                 'message' => 'No user logged in'
             ]);
+        }
+    }
+
+    // todo write tests for this
+    public function forgotPassword(Request $request)
+    {
+        $request->validate([
+            'email' => ['required', 'email', 'max:255']
+        ]);
+
+        $user = User::where('email', $request->get('email'))->first();
+
+        if ($user) {
+            $user->sendPasswordResetNotification(Password::createToken($user));
+            return response()->json([
+                'message' => 'Password reset link has been sent to your email.'
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'No user was found with that email.'
+            ], 404);
         }
     }
 }

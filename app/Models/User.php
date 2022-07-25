@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -106,5 +107,22 @@ class User extends Authenticatable
     public function series_following(): BelongsToMany
     {
         return $this->belongsToMany(Series::class, 'follow_series')->withTimestamps();
+    }
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token) {
+        // The trick is first to instantiate the notification itself
+        $notification = new ResetPassword($token);
+        // Then use the createUrlUsing method
+        $notification->createUrlUsing(function ($token) {
+            return 'https://weareauto.io/password/reset/' . $token; // todo put this in config or env var
+        });
+        // Then you pass the notification
+        $this->notify($notification);
     }
 }
