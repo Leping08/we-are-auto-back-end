@@ -36,7 +36,8 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         ResetPassword::createUrlUsing(function ($user, string $token) {
-            return 'https://weareauto.io/password/reset/' . $token; // todo move this to config or env var
+            $email = $user->email;
+            return config('app.url') . "/password-reset/email/$email/token/$token/";
         });
 
         if (! $this->app->routesAreCached()) {

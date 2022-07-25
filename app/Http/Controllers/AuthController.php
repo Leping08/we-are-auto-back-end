@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -96,6 +97,33 @@ class AuthController extends Controller
             return response()->json([
                 'message' => 'No user was found with that email.'
             ], 404);
+        }
+    }
+
+    // todo write tests for this
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'token' => ['required'],
+            'email' => ['required', 'email'],
+            'password' => ['required', 'min:8', 'confirmed'],
+        ]);
+
+        $response = Password::reset($request->only('email', 'password', 'password_confirmation', 'token'), function ($user, $password) {
+            $user->forceFill([
+                'password' => Hash::make($password)
+            ]);
+            $user->save();
+        });
+
+        if ($response === Password::PASSWORD_RESET) {
+            return response()->json([
+                'message' => 'Password successfully reset.'
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'Password reset failed.'
+            ], 500);
         }
     }
 }
