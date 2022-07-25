@@ -8,6 +8,7 @@ use App\Models\VideoProgress;
 use App\Policies\LeaguesPolicy;
 use App\Policies\UserPolicy;
 use App\Policies\VideoProgressPolicy;
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Passport\Passport;
@@ -33,6 +34,10 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+
+        ResetPassword::createUrlUsing(function ($user, string $token) {
+            return 'https://weareauto.io/password/reset/' . $token; // todo move this to config or env var
+        });
 
         if (! $this->app->routesAreCached()) {
             Passport::routes(function ($router) {
