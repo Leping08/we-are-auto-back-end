@@ -72,11 +72,11 @@ class Race extends Resource
             HasMany::make('Videos'),
             HasMany::make('Problems', 'race_problems', RaceProblem::class),
 
-            BelongsToMany::make('Cars'),
-            BelongsToMany::make('Leagues'),
+            // BelongsToMany::make('Cars'),
+            // BelongsToMany::make('Leagues'),
 
-            HasMany::make('Results'),
-            HasMany::make('Picks'),
+            // HasMany::make('Results'),
+            // HasMany::make('Picks'),
 
 
         ];

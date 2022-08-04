@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\BelongsToMany;
 
 class Car extends Resource
 {
+    public static $displayInNavigation = false;
     /**
      * The model the resource corresponds to.
      *

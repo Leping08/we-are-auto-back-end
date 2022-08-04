@@ -8,6 +8,7 @@ use Laravel\Nova\Fields\BelongsTo;
 
 class Pick extends Resource
 {
+    public static $displayInNavigation = false;
     /**
      * The model the resource corresponds to.
      *
