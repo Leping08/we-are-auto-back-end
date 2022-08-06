@@ -27,6 +27,7 @@ class SeriesFactory extends Factory
             'full_name' => $this->faker->word,
             'logo' => $this->faker->imageUrl,
             'image_url' => $this->faker->imageUrl,
+            'website' => $this->faker->url,
             'description' => $this->faker->paragraph,
         ];
     }

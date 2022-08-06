@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $full_name
  * @property string $logo
  * @property string $image_url
+ * @property string $website
  * @property string $description
  * @property Carbon $created_at
  * @property Carbon $updated_at
@@ -44,6 +45,7 @@ class Series extends Model
         'full_name',
         'logo',
         'image_url',
+        'website',
         'description',
     ];
 
