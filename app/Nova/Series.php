@@ -52,7 +52,8 @@ class Series extends Resource
                 ->rules('required', 'string', 'max:1000'),
 
             Text::make('Website')
-                ->rules('string', 'max:1000'),
+                ->rules('string', 'max:1000')
+                ->hideFromIndex(),
 
             Text::make('Description')
                 ->rules('required', 'string', 'max:1000')
