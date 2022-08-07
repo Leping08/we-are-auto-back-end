@@ -14,6 +14,4 @@ Checkout the latest races of your favorite series!
 @endforeach
 @endcomponent
 
-Thanks,<br>
-{{ config('app.name') }}
 @endcomponent

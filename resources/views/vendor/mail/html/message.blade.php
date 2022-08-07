@@ -2,7 +2,7 @@
 {{-- Header --}}
 @slot('header')
 @component('mail::header', ['url' => config('app.url')])
-{{ config('app.name') }}
+<img class="logo" src="{{asset('https://weareauto.io/img/waa-logo-dark.a80a203e.svg')}}" alt="">
 @endcomponent
 @endslot
 

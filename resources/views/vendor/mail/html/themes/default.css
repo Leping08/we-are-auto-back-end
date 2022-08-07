@@ -6,7 +6,6 @@ body, body *:not(html):not(style):not(br):not(tr):not(code) {
 }
 
 body {
-    background-color: #f3f4f6;
     color: #74787e;
     height: 100%;
     hyphens: auto;
@@ -82,9 +81,14 @@ img {
 /* Layout */
 
 .wrapper {
-    background-color: #f3f4f6;
+    background:
+        linear-gradient(to left top, #2563eb /*bottom-right color*/, #60a5fa /*top-left color*/),
+        linear-gradient(#2563eb, #2563eb)/*"faked" black background make sure to add last or it will appear before the transparent/colored layer*/;
     margin: 0;
-    padding: 0;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     width: 100%;
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
@@ -103,8 +107,11 @@ img {
 /* Header */
 
 .header {
-    padding: 25px 0;
     text-align: center;
+    height: 100px;
+    flex: auto;
+    align-items: center;
+    justify-content: center;
 }
 
 .header a {
@@ -118,9 +125,8 @@ img {
 /* Body */
 
 .body {
-    background-color: #ffffff;
-    border-bottom: 1px solid #edeff2;
-    border-top: 1px solid #edeff2;
+    /* border-bottom: 1px solid #edeff2; */
+    /* border-top: 1px solid #edeff2; */
     margin: 0;
     padding: 0;
     width: 100%;
@@ -131,6 +137,7 @@ img {
 
 .inner-body {
     background-color: #ffffff;
+    border-radius: 1rem;
     margin: 0 auto;
     padding: 0;
     width: 570px;
@@ -142,7 +149,7 @@ img {
 /* Subcopy */
 
 .subcopy {
-    border-top: 1px solid #edeff2;
+    /* border-top: 1px solid #edeff2; */
     margin-top: 25px;
     padding-top: 25px;
 }
@@ -157,14 +164,14 @@ img {
     margin: 0 auto;
     padding: 0;
     text-align: center;
-    width: 570px;
-    -premailer-cellpadding: 0;
-    -premailer-cellspacing: 0;
-    -premailer-width: 570px;
+    width: 100%;
+    /* -premailer-cellpadding: 0; */
+    /* -premailer-cellspacing: 0; */
+    /* -premailer-width: 570px; */
 }
 
 .footer p {
-    color: #aeaeae;
+    color: rgb(243 244 246);
     font-size: 12px;
     text-align: center;
 }
@@ -181,7 +188,7 @@ img {
 
 .table th {
     color: #74787e;
-    border-bottom: 1px solid #edeff2;
+    /* border-bottom: 1px solid #edeff2; */
     padding-bottom: 8px;
 }
 
@@ -193,7 +200,7 @@ img {
 }
 
 .content-cell {
-    padding: 35px;
+    padding: 25px;
 }
 
 /* Buttons */
@@ -209,7 +216,7 @@ img {
 }
 
 .button {
-    border-radius: 3px;
+    border-radius: 8px;
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);
     color: #ffffff;
     display: inline-block;
@@ -218,11 +225,11 @@ img {
 }
 
 .button-blue, .button-primary {
-    background-color: #2564eb;
-    border-top: 10px solid #2564eb;
-    border-right: 18px solid #2564eb;
-    border-bottom: 10px solid #2564eb;
-    border-left: 18px solid #2564eb;
+    background-color: #2563eb;
+    border-top: 10px solid #2563eb;
+    border-right: 18px solid #2563eb;
+    border-bottom: 10px solid #2563eb;
+    border-left: 18px solid #2563eb;
 }
 
 .button-green, .button-success {
@@ -283,4 +290,10 @@ img {
 .promotion p {
     font-size: 15px;
     text-align: center;
+}
+
+.logo {
+    width: 80px;
+    background-color: white;
+    border-radius: 9999px;
 }
