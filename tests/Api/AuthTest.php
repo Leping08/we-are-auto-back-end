@@ -45,7 +45,8 @@ class AuthTest extends TestCase
             'name' => $this->faker->name,
             'email' => $this->faker->email,
             'password' => $password,
-            'password_confirmation' => $password
+            'password_confirmation' => $password,
+            'terms_and_conditions' => true
         ];
 
         $this->assertDatabaseMissing('users', [
@@ -57,6 +58,43 @@ class AuthTest extends TestCase
         $this->assertDatabaseHas('users', [
             'name' => $data['name'],
             'email' => $data['email']
+        ]);
+    }
+
+    /** @test */
+    public function a_user_must_accept_the_privacy_policy()
+    {
+        $password = $this->faker->lexify('??????????');
+        $data = [
+            'name' => $this->faker->name,
+            'email' => $this->faker->email,
+            'password' => $password,
+            'password_confirmation' => $password
+        ];
+
+        $this->assertDatabaseMissing('users', [
+            'name' => $data['name'],
+            'email' => $data['email']
+        ]);
+
+        $this->json('POST', route('register'), $data);
+        $this->assertDatabaseMissing('users', [
+            'name' => $data['name'],
+            'email' => $data['email']
+        ]);
+
+        $dataWithTermsChecked = [
+            'name' => $this->faker->name,
+            'email' => $this->faker->email,
+            'password' => $password,
+            'password_confirmation' => $password,
+            'terms_and_conditions' => true
+        ];
+
+        $this->json('POST', route('register'), $dataWithTermsChecked);
+        $this->assertDatabaseHas('users', [
+            'name' => $dataWithTermsChecked['name'],
+            'email' => $dataWithTermsChecked['email']
         ]);
     }
 }
