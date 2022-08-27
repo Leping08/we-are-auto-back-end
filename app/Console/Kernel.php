@@ -16,9 +16,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->call(function () {
-            SendFollowedSeriesEmails::dispatch();
-        })->weeklyOn(4, '10:00'); // Thursday at 10:00 AM
+        // todo bring back when the race subscriptions are fixed
+        // $schedule->call(function () {
+        //     SendFollowedSeriesEmails::dispatch();
+        // })->weeklyOn(4, '10:00'); // Thursday at 10:00 AM
     }
 
     /**
