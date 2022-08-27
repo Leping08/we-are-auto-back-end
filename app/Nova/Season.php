@@ -50,9 +50,9 @@ class Season extends Resource
             Boolean::make('Active')
                 ->rules('required'),
 
+            TimeStamps::panel(),
+
             HasMany::make('Races'),
-
-
         ];
     }
 

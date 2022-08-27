@@ -49,6 +49,7 @@ class League extends Resource
 
             BelongsToMany::make('Races'),
             BelongsToMany::make('Users'),
+            TimeStamps::panel(),
         ];
     }
 

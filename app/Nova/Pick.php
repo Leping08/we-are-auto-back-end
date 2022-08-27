@@ -47,7 +47,7 @@ class Pick extends Resource
             BelongsTo::make('Car'),
             BelongsTo::make('User'),
 
-
+            TimeStamps::panel(),
         ];
     }
 

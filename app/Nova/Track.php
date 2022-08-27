@@ -47,8 +47,9 @@ class Track extends Resource
             Text::make('Name')
                 ->rules('required', 'string', 'max:400'),
 
-            HasMany::make('Races'),
+            TimeStamps::panel(),
 
+            HasMany::make('Races'),
 
         ];
     }

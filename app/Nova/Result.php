@@ -50,6 +50,8 @@ class Result extends Resource
             Text::make('Position')
                 ->rules('string'),
 
+            TimeStamps::panel(),
+
             BelongsTo::make('Car'),
             BelongsTo::make('Race'),
             BelongsTo::make('Car'),

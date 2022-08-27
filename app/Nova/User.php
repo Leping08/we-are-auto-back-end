@@ -66,7 +66,10 @@ class User extends Resource
                 ->creationRules('required', Rules\Password::defaults())
                 ->updateRules('nullable', Rules\Password::defaults()),
 
+            TimeStamps::panel(),
+
             MorphMany::make('Roles', 'roles', Role::class),
+            HasMany::make('Video Progress', 'video_progress', VideoProgress::class),
             HasMany::make('Problems', 'race_problems', RaceProblem::class),
             BelongsToMany::make('Series Following', 'series_following', Series::class),
         ];

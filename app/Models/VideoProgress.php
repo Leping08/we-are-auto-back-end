@@ -55,13 +55,6 @@ class VideoProgress extends Model
         'seconds' => 'integer',
     ];
 
-    protected static function booted()
-    {
-        parent::boot();
-
-        static::addGlobalScope(new UserScope());
-    }
-
     /**
      * @return BelongsTo
      */
@@ -75,6 +68,6 @@ class VideoProgress extends Model
      */
     public function user(): BelongsTo
     {
-        return $this->belongsTo(Video::class);
+        return $this->belongsTo(User::class);
     }
 }

@@ -83,6 +83,8 @@ class Series extends Resource
                 ->asHtml()
                 ->onlyOnDetail(),
 
+            TimeStamps::panel(),
+
             HasMany::make('Races'),
             HasMany::make('Cars'),
             BelongsToMany::make('Users Following', 'users_following', User::class),

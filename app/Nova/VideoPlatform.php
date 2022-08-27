@@ -42,7 +42,8 @@ class VideoPlatform extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-            Text::make('Name')
+            Text::make('Name'),
+            TimeStamps::panel(),
         ];
     }
 

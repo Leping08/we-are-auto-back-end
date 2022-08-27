@@ -44,16 +44,12 @@ class Car extends Resource
     {
         return [
             ID::make()->sortable(),
-
             Text::make('Number')
                 ->rules('required', 'string'),
-
             BelongsTo::make('Series'),
             BelongsTo::make('Series'),
-
+            TimeStamps::panel(),
             BelongsToMany::make('Races'),
-
-
         ];
     }
 

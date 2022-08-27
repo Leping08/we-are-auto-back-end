@@ -47,7 +47,8 @@ class Suggestion extends Resource
             BelongsTo::make('Race'),
             BelongsTo::make('User'),
             Boolean::make('Processed', 'processed'),
-            Code::make('Data', 'data')->json()
+            Code::make('Data', 'data')->json(),
+            TimeStamps::panel(),
         ];
     }
 

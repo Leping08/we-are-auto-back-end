@@ -69,6 +69,8 @@ class Race extends Resource
             BelongsTo::make('Track')
                 ->searchable(),
 
+            TimeStamps::panel(),
+
             HasMany::make('Videos'),
             HasMany::make('Problems', 'race_problems', RaceProblem::class),
 

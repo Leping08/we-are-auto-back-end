@@ -47,6 +47,7 @@ class RaceProblem extends Resource
             Textarea::make('Description')->alwaysShow(),
             BelongsTo::make('User'),
             BelongsTo::make('Race'),
+            TimeStamps::panel(),
         ];
     }
 

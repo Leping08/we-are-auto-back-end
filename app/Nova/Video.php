@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -59,6 +60,9 @@ class Video extends Resource
                 ->placeholder('4000')
                 ->hideFromIndex(),
 
+            TimeStamps::panel(),
+
+            HasMany::make('Users Watched', 'video_progress', VideoProgress::class),
         ];
     }
 

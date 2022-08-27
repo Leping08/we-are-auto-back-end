@@ -2,18 +2,21 @@
 
 namespace App\Nova;
 
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Role extends Resource
+class VideoProgress extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \Spatie\Permission\Models\Role::class;
+    public static $model = \App\Models\VideoProgress::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -40,9 +43,11 @@ class Role extends Resource
     public function fields(NovaRequest $request)
     {
         return [
-            ID::make(__('ID'), 'id')->sortable(),
-            Text::make(__('Name'), 'name'),
-            Text::make(__('Guard Name'), 'guard_name'),
+            ID::make()->sortable(),
+            BelongsTo::make('Video'),
+            BelongsTo::make('User'),
+            Number::make('Percentage')->sortable(),
+            Number::make('Seconds')->sortable(),
             TimeStamps::panel(),
         ];
     }
