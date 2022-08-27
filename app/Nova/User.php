@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use App\Nova\Actions\AssignRole;
 use Illuminate\Validation\Rules;
+use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
@@ -67,6 +68,7 @@ class User extends Resource
 
             MorphMany::make('Roles', 'roles', Role::class),
             HasMany::make('Problems', 'race_problems', RaceProblem::class),
+            BelongsToMany::make('Series Following', 'series_following', Series::class),
         ];
     }
 

@@ -2,6 +2,8 @@
 
 namespace App\Nova;
 
+use App\Models\FollowSeries;
+use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Text;
@@ -83,7 +85,7 @@ class Series extends Resource
 
             HasMany::make('Races'),
             HasMany::make('Cars'),
-
+            BelongsToMany::make('Users Following', 'users_following', User::class),
 
         ];
     }
