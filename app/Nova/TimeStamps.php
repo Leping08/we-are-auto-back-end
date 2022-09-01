@@ -16,9 +16,9 @@ class TimeStamps
     public static function panel()
     {
         return new Panel('Timestamps', [
-            DateTime::make('Created At')->hideFromIndex(),
-            DateTime::make('Updated At')->hideFromIndex(),
-            DateTime::make('Deleted At')->hideFromIndex(),
+            DateTime::make('Created At')->onlyOnDetail(),
+            DateTime::make('Updated At')->onlyOnDetail(),
+            DateTime::make('Deleted At')->onlyOnDetail(),
         ]);
     }
 }
