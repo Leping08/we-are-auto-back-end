@@ -23,12 +23,13 @@ class SeriesFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->word,
-            'full_name' => $this->faker->word,
+            'name' => $this->faker->name,
+            'full_name' => $this->faker->name,
             'logo' => $this->faker->imageUrl,
             'image_url' => $this->faker->imageUrl,
             'website' => $this->faker->url,
             'description' => $this->faker->paragraph,
+            'settings' => null,
         ];
     }
 }

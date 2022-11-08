@@ -169,6 +169,7 @@ return [
          */
         App\Providers\NovaServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
+        Alaouy\Youtube\YoutubeServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -193,6 +194,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
+        'Youtube' => Alaouy\Youtube\Facades\Youtube::class,
     ])->toArray(),
 
 ];

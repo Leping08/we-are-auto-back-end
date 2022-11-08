@@ -18,7 +18,7 @@ use Spatie\SimpleExcel\SimpleExcelReader;
 
 class Imsa
 {
-    private static string $topUrl = "http://results.imsa.com/top.php";
+    private static $topUrl = "http://results.imsa.com/top.php";
 
     public static function getSeasons(): Collection
     {
@@ -30,7 +30,7 @@ class Imsa
         return self::getData('event');
     }
 
-    public static function getLatestSeason(): String
+    public static function getLatestSeason()
     {
         return self::getSeasons()->last();
     }

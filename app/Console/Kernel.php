@@ -2,9 +2,12 @@
 
 namespace App\Console;
 
+use App\Jobs\FindPotentialRacesForSeries;
 use App\Jobs\SendFollowedSeriesEmails;
+use App\Models\Series;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Tests\Unit\FindPotentialRaceTest;
 
 class Kernel extends ConsoleKernel
 {
@@ -20,6 +23,12 @@ class Kernel extends ConsoleKernel
         // $schedule->call(function () {
         //     SendFollowedSeriesEmails::dispatch();
         // })->weeklyOn(4, '10:00'); // Thursday at 10:00 AM
+
+        $schedule->call(function () {
+            Series::all()->each(function (Series $series) {
+                FindPotentialRacesForSeries::dispatch($series);
+            });
+        })->dailyAt('6:00'); // Daily at 6:00 AM
     }
 
     /**

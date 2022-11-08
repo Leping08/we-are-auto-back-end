@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $image_url
  * @property string $website
  * @property string $description
+ * @property array $settings
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property Carbon $deleted_at
@@ -47,6 +48,7 @@ class Series extends Model
         'image_url',
         'website',
         'description',
+        'settings',
     ];
 
     /**
@@ -56,6 +58,7 @@ class Series extends Model
      */
     protected $casts = [
         'id' => 'integer',
+        'settings' => 'json',
     ];
 
 

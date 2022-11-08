@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use App\Models\FollowSeries;
 use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Fields\Code;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Text;
@@ -59,6 +60,11 @@ class Series extends Resource
 
             Text::make('Description')
                 ->rules('required', 'string', 'max:1000')
+                ->hideFromIndex(),
+
+            Code::make('Settings')
+                ->json()
+                ->rules('json')
                 ->hideFromIndex(),
 
             Text::make('Logo')
