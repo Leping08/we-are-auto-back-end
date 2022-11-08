@@ -5,7 +5,6 @@ namespace Tests\Unit;
 // use Alaouy\Youtube\Youtube;
 use Alaouy\Youtube\Facades\Youtube;
 use App\Jobs\FindPotentialRacesForSeries;
-use App\Library\PotentialRaces\FindPotentialRaces;
 use App\Models\Season;
 use App\Models\Series;
 use Illuminate\Foundation\Testing\RefreshDatabase;
