@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use App\Models\FollowSeries;
+use App\Nova\Actions\RunFindPotentialRacesForSeries;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Code;
 use Laravel\Nova\Fields\ID;
@@ -139,6 +140,8 @@ class Series extends Resource
      */
     public function actions(NovaRequest $request)
     {
-        return [];
+        return [
+            new RunFindPotentialRacesForSeries
+        ];
     }
 }

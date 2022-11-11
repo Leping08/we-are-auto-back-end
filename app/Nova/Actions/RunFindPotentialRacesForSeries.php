@@ -16,6 +16,8 @@ class RunFindPotentialRacesForSeries extends Action
 {
     use InteractsWithQueue, Queueable;
 
+    public $name = "Find Potential Races";
+
     /**
      * Perform the action on the given models.
      *
