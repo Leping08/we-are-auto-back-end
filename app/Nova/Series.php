@@ -92,6 +92,7 @@ class Series extends Resource
 
             TimeStamps::panel(),
 
+            HasMany::make('Potential Races'),
             HasMany::make('Races'),
             HasMany::make('Cars'),
             BelongsToMany::make('Users Following', 'users_following', User::class),

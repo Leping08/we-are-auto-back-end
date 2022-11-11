@@ -103,6 +103,14 @@ class Series extends Model
     }
 
     /**
+     * @return HasMany
+     */
+    public function potentialRaces(): HasMany
+    {
+        return $this->hasMany(PotentialRace::class);
+    }
+
+    /**
      * @see unique_car_classes
      */
     public function unique_car_classes()
