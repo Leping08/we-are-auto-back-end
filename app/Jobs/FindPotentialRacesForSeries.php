@@ -83,8 +83,8 @@ class FindPotentialRacesForSeries implements ShouldQueue
                 return true;
             }
 
-            // Check if the title of the video contains the required keywords
-            if (isset($videoTitle) && isset($keywords) && !Str::contains($videoTitle, $keywords)) {
+            // Check if the title of the video contains all the required keywords
+            if (isset($videoTitle) && isset($keywords) && !Str::containsAll($videoTitle, $keywords, true)) {
                 Log::info("Skipping due to keywords not found in video title: $videoTitle");
                 return true;
             }
