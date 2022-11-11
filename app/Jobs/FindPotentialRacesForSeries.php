@@ -78,19 +78,19 @@ class FindPotentialRacesForSeries implements ShouldQueue
             $youtubeVideoId = data_get($videoDetails, 'id');
 
             // Check if the video is over the min race time in seconds
-            if (isset($seconds) && isset($minRaceTimeInSeconds) && $seconds > $minRaceTimeInSeconds) {
+            if (isset($seconds) && isset($minRaceTimeInSeconds) && !($seconds > $minRaceTimeInSeconds)) {
                 Log::info("Skipping due to video length of: $seconds seconds and series min race time of $minRaceTimeInSeconds seconds.");
                 return true;
             }
 
-            // Check if the name of the video contains the required keywords
+            // Check if the title of the video contains the required keywords
             if (isset($videoTitle) && isset($keywords) && !Str::contains($videoTitle, $keywords)) {
                 Log::info("Skipping due to keywords not found in video title: $videoTitle");
                 return true;
             }
 
             // Check if the video is already in the database
-            if (isset($youtubeVideoId) && PotentialRace::where('youtube_video_id', $youtubeVideoId)->exists()) {
+            if (isset($youtubeVideoId) && PotentialRace::where('youtube_video_id', $youtubeVideoId)->withTrashed()->exists()) {
                 Log::info("Skipping due to video already in DB: $youtubeVideoId");
                 return true;
             }
