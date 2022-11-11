@@ -33,6 +33,5 @@
         <env name="DB_USERNAME" value="root"/>
         <env name="DB_DATABASE" value="testing"/>
         <env name="DB_HOST" value="127.0.0.1" />
-        <env name="YOUTUBE_API_KEY" value="testing_api_key" />
     </php>
 </phpunit>
