@@ -10,6 +10,13 @@ use Illuminate\Support\Facades\Auth;
 
 class SeriesFollowController extends Controller
 {
+    public function index()
+    {
+        return Series::with(['users_following' => function ($query) {
+            return $query->where('user_id', Auth::id());
+        }])->get();
+    }
+
     public function show(Series $series)
     {
         $user = Auth::user();

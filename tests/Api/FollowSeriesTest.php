@@ -4,19 +4,80 @@
 namespace Tests\Api;
 
 use App\Models\FollowSeries;
-use App\Models\Race;
-use App\Models\RaceSuggestion;
 use App\Models\Series;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Auth;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 
 class FollowSeriesTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
+
+    /** @test */
+    public function a_authenticated_user_list_all_series_and_see_which_ones_they_are_following()
+    {
+        $user = User::factory()->create();
+        $user_2 = User::factory()->create();
+        Passport::actingAs($user);
+
+        $series = Series::factory()->create();
+
+        $data = [
+            'series_id' => $series->id,
+            'user_id' => $user->id
+        ];
+
+        $this->post(route('follow.series.store'), $data)
+            ->assertStatus(201);
+
+        $response = $this->get(route('follow.series.index'))
+            ->assertStatus(200);
+
+        $this->assertTrue($response[0]['users_following'][0]['id'] == $user->id);
+        $this->assertNotTrue($response[0]['users_following'][0]['id'] == $user_2->id);
+    }
+
+    /** @test */
+    public function a_authenticated_user_can_only_see_its_user_under_series_users_following()
+    {
+        $user_1 = User::factory()->create();
+        $user_2 = User::factory()->create();
+        Passport::actingAs($user_1);
+
+        $series = Series::factory()->create();
+
+        $data = [
+            'series_id' => $series->id,
+            'user_id' => $user_1->id
+        ];
+
+        $this->post(route('follow.series.store'), $data)
+            ->assertStatus(201);
+
+        $response = $this->get(route('follow.series.index'))
+            ->assertStatus(200);
+
+        $this->assertTrue($response[0]['users_following'][0]['id'] == $user_1->id);
+        $this->assertNotTrue($response[0]['users_following'][0]['id'] == $user_2->id);
+        $this->assertEquals(1, count($response[0]['users_following']));
+
+        Passport::actingAs($user_2);
+
+        $data = [
+            'series_id' => $series->id,
+            'user_id' => $user_2->id
+        ];
+
+        $this->post(route('follow.series.store'), $data)
+            ->assertStatus(201);
+
+        $response_2 = $this->get(route('follow.series.index'))
+            ->assertStatus(200);
+
+        $this->assertEquals(1, count($response_2[0]['users_following']));
+    }
 
     /** @test */
     public function a_authenticated_user_can_follow_a_series()

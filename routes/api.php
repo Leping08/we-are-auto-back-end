@@ -62,7 +62,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/video-progress', [\App\Http\Controllers\VideoProgressController::class, 'store'])->name('video-progress.store');
 
     // Follow Series
-    Route::post('/follow-series', [\App\Http\Controllers\SeriesFollowController::class, 'index'])->name('follow.series.index');
+    Route::get('/follow-series', [\App\Http\Controllers\SeriesFollowController::class, 'index'])->name('follow.series.index');
     Route::get('/follow-series/{series}', [\App\Http\Controllers\SeriesFollowController::class, 'show'])->name('follow.series.show');
     Route::post('/follow-series', [\App\Http\Controllers\SeriesFollowController::class, 'store'])->name('follow.series.store');
 });
