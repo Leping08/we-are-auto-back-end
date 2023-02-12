@@ -7,6 +7,7 @@ use Alaouy\Youtube\Facades\Youtube;
 use App\Jobs\FindPotentialRacesForSeries;
 use App\Models\Season;
 use App\Models\Series;
+use App\Models\Track;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -15,13 +16,6 @@ class FindPotentialRaceTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    // /** @test */
-    // public function placeholder()
-    // {
-    //     $this->assertTrue(true);
-    // }
-
-    // todo FIX THESE TESTS ON GITHUB ACTIONS
     /** @test */
     public function it_created_a_potential_race()
     {
@@ -53,6 +47,45 @@ class FindPotentialRaceTest extends TestCase
     }
 
     /** @test */
+    public function it_guesses_the_correct_track_when_creating_a_potential_race()
+    {
+        // Create a current season
+        Season::factory()->create();
+
+        // Create a series
+        $series = Series::factory()->create([
+            'settings' => [
+                "youtube" => [
+                    "channel_id" => "fdsjnfdskjna",
+                    "required_key_words" => [
+                        "MX-5"
+                    ],
+                    "min_race_time_in_seconds" => 2000
+                ]
+            ]
+        ]);
+
+        // Create a track
+        $track = Track::factory()->create([
+            'name' => 'Sebring',
+        ]);
+
+        // Fake the data coming back from the youtube api
+        Youtube::shouldReceive('listChannelVideos')
+            ->andReturn(self::channelVideosResponse());
+        Youtube::shouldReceive('getVideoInfo')
+            ->andReturn(self::videoInfoResponse());
+
+        FindPotentialRacesForSeries::dispatch($series);
+
+        $this->assertDatabaseCount('potential_races', 1);
+        $this->assertDatabaseHas('potential_races', [
+            'track_id' => $track->id,
+            'series_id' => $series->id,
+        ]);
+    }
+
+    /** @test */
     public function it_does_not_create_a_potential_race_if_the_title_does_not_contain_all_the_keywords()
     {
         // Create a current season
@@ -64,6 +97,37 @@ class FindPotentialRaceTest extends TestCase
                 "youtube" => [
                     "channel_id" => "fdsjnfdskjna",
                     "required_key_words" => ['this is not in the title'],
+                    "min_race_time_in_seconds" => 5000
+                ]
+            ]
+        ]);
+
+        // Fake the data coming back from the youtube api
+        Youtube::shouldReceive('listChannelVideos')
+            ->andReturn(self::channelVideosResponse());
+        Youtube::shouldReceive('getVideoInfo')
+            ->andReturn(self::videoInfoResponse());
+
+        FindPotentialRacesForSeries::dispatch($series);
+
+        $this->assertDatabaseCount('potential_races', 0);
+    }
+
+    /** @test */
+    public function it_does_not_create_a_potential_race_if_the_title_contains_the_excluded_keywords()
+    {
+        // Create a current season
+        Season::factory()->create();
+
+        // Create a series
+        $series = Series::factory()->create([
+            'settings' => [
+                "youtube" => [
+                    "channel_id" => "fdsjnfdskjna",
+                    "required_key_words" => ['this is not in the title'],
+                    "excluded_key_words" => [
+                        "Sebring"
+                    ],
                     "min_race_time_in_seconds" => 5000
                 ]
             ]
