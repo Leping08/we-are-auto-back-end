@@ -111,6 +111,14 @@ class Series extends Model
     }
 
     /**
+     * @return BelongsToMany
+     */
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class, 'series_tags')->withTimestamps();
+    }
+
+    /**
      * @see unique_car_classes
      */
     public function unique_car_classes()

@@ -95,6 +95,7 @@ class Series extends Resource
             HasMany::make('Potential Races'),
             HasMany::make('Races'),
             HasMany::make('Cars'),
+            BelongsToMany::make('Tags', 'tags', Tag::class),
             BelongsToMany::make('Users Following', 'users_following', User::class),
 
         ];
