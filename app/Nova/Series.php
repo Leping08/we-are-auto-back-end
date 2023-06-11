@@ -10,6 +10,8 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\VaporImage;
+
 
 class Series extends Resource
 {
@@ -68,25 +70,34 @@ class Series extends Resource
                 ->rules('json')
                 ->hideFromIndex(),
 
-            Text::make('Logo')
-                ->rules('required', 'string', 'max:1000')
-                ->hideFromIndex()
-                ->hideFromDetail(),
+            // Text::make('Logo')
+            //     ->rules('required', 'string', 'max:1000')
+            //     ->hideFromIndex()
+            //     ->hideFromDetail(),
+
+            VaporImage::make('Logo')
+                ->disk('public')
+                ->required(),
 
             Text::make('Logo', function () {
-                return "<div class='flex items-center'><div class='w-1/4'><img src='{$this->logo}' style='max-width: 50%;'></div><div class='w-3/4'><a target='_blank' class='no-underline dim text-primary font-bold' href='{$this->logo}'>{$this->logo}</a></div></div>";
-            })
+                    return "<div class='flex items-center'><div class='w-1/4'><img src='{$this->logo}' style='max-width: 50%;'></div><div class='w-3/4'><a target='_blank' class='no-underline dim text-primary font-bold' href='{$this->logo}'>{$this->logo}</a></div></div>";
+                })
                 ->asHtml()
                 ->onlyOnDetail(),
 
-            Text::make('Image Url')
-                ->rules('required', 'string', 'max:1000')
-                ->hideFromIndex()
-                ->hideFromDetail(),
+            // Text::make('Image Url')
+            //     ->rules('required', 'string', 'max:1000')
+            //     ->hideFromIndex()
+            //     ->hideFromDetail(),
+
+            VaporImage::make('Image Url')
+                ->disk('public')
+                ->required(),
+
 
             Text::make('Image Url', function () {
-                return "<div class='flex items-center'><div class='w-1/4'><img src='{$this->image_url}' style='max-width: 50%;'></div><div class='w-3/4'><a target='_blank' class='no-underline dim text-primary font-bold' href='{$this->image_url}'>{$this->image_url}</a></div></div>";
-            })
+                    return "<div class='flex items-center'><div class='w-1/4'><img src='{$this->image_url}' style='max-width: 50%;'></div><div class='w-3/4'><a target='_blank' class='no-underline dim text-primary font-bold' href='{$this->image_url}'>{$this->image_url}</a></div></div>";
+                })
                 ->asHtml()
                 ->onlyOnDetail(),
 
