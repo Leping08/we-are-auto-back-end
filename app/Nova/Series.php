@@ -76,7 +76,6 @@ class Series extends Resource
             //     ->hideFromDetail(),
 
             VaporImage::make('Logo')
-                ->disk('public')
                 ->required(),
 
             Text::make('Logo', function () {
@@ -91,7 +90,6 @@ class Series extends Resource
             //     ->hideFromDetail(),
 
             VaporImage::make('Image Url')
-                ->disk('public')
                 ->required(),
 
 
