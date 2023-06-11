@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * App\Models\Series
@@ -144,5 +146,15 @@ class Series extends Model
             $season['races_count'] = $season->races()->where('series_id', $this->id)->count();
             return $season;
         });
+    }
+
+     /**
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function imageUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => Storage::get($value) ?? null,
+        );
     }
 }
