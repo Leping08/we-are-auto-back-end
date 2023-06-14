@@ -73,14 +73,20 @@ class Series extends Resource
 
 
             VaporImage::make('Logo File')
-                ->required(),
+                ->required()
+                ->storeAs(function ($request) {
+                    return $request->input('vaporFile')['attachment']['key'].'.'.$request->input('vaporFile')['attachment']['extension'];
+                }),
 
             Text::make('Logo')
                 ->rules('required', 'string', 'max:1000')
                 ->hideFromIndex(),
 
             VaporImage::make('Image File')
-                ->required(),
+                ->required()
+                ->storeAs(function ($request) {
+                    return $request->input('vaporFile')['attachment']['key'].'.'.$request->input('vaporFile')['attachment']['extension'];
+                }),
 
             Text::make('Image Url')
                 ->rules('required', 'string', 'max:1000')
