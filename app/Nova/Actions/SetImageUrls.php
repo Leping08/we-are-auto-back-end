@@ -28,11 +28,11 @@ class SetImageUrls extends Action
         // new logo_file, image_file
         foreach ($models as $series) {
             if ($fields->series_logo && $series->logo_file) {
-                $series->logo = $series->logo_file ? Storage::disk('s3')->url($series->logo_file) : null;
+                $series->logo = $series->logo_file ? Storage::disk('s3')->url($series->logo_file) : 'test';
             }
 
             if ($fields->series_image && $series->image_file) {
-                $series->image_url = $series->image_file ? Storage::disk('s3')->url($series->image_file) : null;
+                $series->image_url = $series->image_file ? Storage::disk('s3')->url($series->image_file) : 'test';
             }
 
             $series->save();
