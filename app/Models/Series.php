@@ -16,7 +16,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $name
  * @property string $full_name
  * @property string $logo
+ * @property string $logo_file
  * @property string $image_url
+ * @property string $image_file
  * @property string $website
  * @property string $description
  * @property array $settings

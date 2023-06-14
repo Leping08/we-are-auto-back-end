@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use App\Models\FollowSeries;
 use App\Nova\Actions\RunFindPotentialRacesForSeries;
+use App\Nova\Actions\SetImageUrls;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Code;
 use Laravel\Nova\Fields\ID;
@@ -70,34 +71,22 @@ class Series extends Resource
                 ->rules('json')
                 ->hideFromIndex(),
 
-            // Text::make('Logo')
-            //     ->rules('required', 'string', 'max:1000')
-            //     ->hideFromIndex()
-            //     ->hideFromDetail(),
 
-            VaporImage::make('Logo')
+            VaporImage::make('Logo File')
                 ->required(),
 
-            Text::make('Logo', function () {
-                    return "<div class='flex items-center'><div class='w-1/4'><img src='{$this->logo}' style='max-width: 50%;'></div><div class='w-3/4'><a target='_blank' class='no-underline dim text-primary font-bold' href='{$this->logo}'>{$this->logo}</a></div></div>";
-                })
-                ->asHtml()
-                ->onlyOnDetail(),
+            Text::make('Logo')
+                ->rules('required', 'string', 'max:1000')
+                ->hideFromIndex()
+                ->hideFromDetail(),
 
-            // Text::make('Image Url')
-            //     ->rules('required', 'string', 'max:1000')
-            //     ->hideFromIndex()
-            //     ->hideFromDetail(),
-
-            VaporImage::make('Image Url')
+            VaporImage::make('Image File')
                 ->required(),
 
-
-            Text::make('Image Url', function () {
-                    return "<div class='flex items-center'><div class='w-1/4'><img src='{$this->image_url}' style='max-width: 50%;'></div><div class='w-3/4'><a target='_blank' class='no-underline dim text-primary font-bold' href='{$this->image_url}'>{$this->image_url}</a></div></div>";
-                })
-                ->asHtml()
-                ->onlyOnDetail(),
+            Text::make('Image Url')
+                ->rules('required', 'string', 'max:1000')
+                ->hideFromIndex()
+                ->hideFromDetail(),
 
             TimeStamps::panel(),
 
@@ -152,7 +141,8 @@ class Series extends Resource
     public function actions(NovaRequest $request)
     {
         return [
-            new RunFindPotentialRacesForSeries
+            new RunFindPotentialRacesForSeries,
+            new SetImageUrls
         ];
     }
 }
