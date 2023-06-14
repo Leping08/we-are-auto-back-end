@@ -77,16 +77,14 @@ class Series extends Resource
 
             Text::make('Logo')
                 ->rules('required', 'string', 'max:1000')
-                ->hideFromIndex()
-                ->hideFromDetail(),
+                ->hideFromIndex(),
 
             VaporImage::make('Image File')
                 ->required(),
 
             Text::make('Image Url')
                 ->rules('required', 'string', 'max:1000')
-                ->hideFromIndex()
-                ->hideFromDetail(),
+                ->hideFromIndex(),
 
             TimeStamps::panel(),
 
