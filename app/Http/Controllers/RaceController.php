@@ -3,10 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Race;
-use App\Scopes\UserScope;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class RaceController extends Controller
 {
@@ -28,5 +24,10 @@ class RaceController extends Controller
                     ->latest()
                     ->take($count)
                     ->get();
+    }
+
+    public function random(int $count)
+    {
+        return Race::get()->random($count);
     }
 }

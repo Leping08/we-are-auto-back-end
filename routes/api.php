@@ -32,6 +32,7 @@ Route::get('/series/{series}/season/{season}', [\App\Http\Controllers\SeriesSeas
 Route::get('/races', [\App\Http\Controllers\RaceController::class, 'index'])->name('races.index');
 Route::get('/races/latest/{count}', [\App\Http\Controllers\RaceController::class, 'latest'])->name('races.latest');
 Route::get('/races/{race}', [\App\Http\Controllers\RaceController::class, 'show'])->name('races.show');
+Route::get('/races/random/{count}', [\App\Http\Controllers\RaceController::class, 'random'])->name('races.random');
 
 Route::post('/race-problem', [\App\Http\Controllers\RaceProblemController::class, 'store'])->name('race-problem.store');
 

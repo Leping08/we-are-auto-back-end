@@ -58,4 +58,21 @@ class RaceTest extends TestCase
             ->assertSee(['videos', 'series', 'season', 'track'])
             ->assertJsonCount($count);
     }
+
+    /** @test */
+    public function a_user_can_get_a_ramdom_race_by_hitting_the_endpoint()
+    {
+        $count = 5;
+        $races = Race::factory()->count($count)->create();
+
+        $races->each(function ($race) {
+            Video::factory()->create([
+                'race_id' => $race->id
+            ]);
+        });
+
+        $this->get(route('races.random', ['count' => 2]))
+            ->assertStatus(200)
+            ->assertJsonCount(2);
+    }
 }
