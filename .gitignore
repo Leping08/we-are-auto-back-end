@@ -1,10 +1,14 @@
+/.phpunit.cache
 /node_modules
+/public/build
 /public/hot
 /public/storage
 /storage/*.key
 /vendor
 .env
 .env.backup
+.env.production
+.env.staging
 .phpunit.result.cache
 docker-compose.override.yml
 Homestead.json
@@ -13,6 +17,8 @@ npm-debug.log
 yarn-error.log
 .idea/
 .vapor/
-.env.production
 .env.staging
 auth.json
+/.fleet
+/.idea
+/.vscode
