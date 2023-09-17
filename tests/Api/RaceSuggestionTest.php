@@ -27,10 +27,14 @@ class RaceSuggestionTest extends TestCase
             'data' => [
                 [
                     'part' => 1,
+                    'start_time' => 12,
+                    'end_time' => 123,
                     'link' => 'https://youtube.com/zzzzzz'
                 ],
                 [
                     'part' => 2,
+                    'start_time' => 23,
+                    'end_time' => 234,
                     'link' => 'https://youtube.com/fffffff'
                 ]
             ]
@@ -57,10 +61,14 @@ class RaceSuggestionTest extends TestCase
             'data' => [
                 [
                     'part' => 1,
+                    'start_time' => 12,
+                    'end_time' => 123,
                     'link' => 'https://youtube.com/zzzzzz'
                 ],
                 [
                     'part' => 2,
+                    'start_time' => 23,
+                    'end_time' => 234,
                     'link' => 'https://youtube.com/fffffff'
                 ]
             ]
