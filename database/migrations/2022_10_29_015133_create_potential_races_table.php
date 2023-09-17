@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreignId('track_id')->nullable();
             $table->foreignId('season_id')->nullable();
             $table->timestamps();
-            $table->softDeletes(); // todo testing
+            $table->softDeletes();
         });
     }
 

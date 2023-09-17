@@ -19,6 +19,8 @@ class RaceSuggestionController extends Controller
         $filteredData = collect($request->get('data'))->map(function ($raceData) {
             return [
                 'part' => $raceData['part'] ?? null,
+                'start_time' => $raceData['start_time'] ?? null,
+                'end_time' => $raceData['end_time'] ?? null,
                 'link' => $raceData['link'] ?? null
             ];
         });
