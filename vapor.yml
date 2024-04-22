@@ -8,12 +8,12 @@ environments:
     database: production
     storage: we-are-auto-api-production
     domain: api.weareauto.io
-      build:
-      - composer install --no-dev
-      - php artisan event:cache
-      # - npm ci && npm run prod && rm -rf node_modules
+    build:
+        - 'composer install --no-dev'
+        - 'php artisan event:cache'
+        # - 'npm ci && npm run prod && rm -rf node_modules'
     deploy:
-      - php artisan migrate --force
+        - 'php artisan migrate --force'
   staging:
     memory: 1024
     cli-memory: 512
@@ -22,8 +22,8 @@ environments:
     storage: we-are-auto-api-staging
     domain: staging.api.weareauto.io
     build:
-      - composer install --no-dev
-      - php artisan event:cache
-      # - npm ci && npm run prod && rm -rf node_modules
+      - 'composer install --no-dev'
+      - 'php artisan event:cache'
+      # - 'npm ci && npm run prod && rm -rf node_modules'
     deploy:
-      - php artisan migrate --force
+      - 'php artisan migrate --force'
