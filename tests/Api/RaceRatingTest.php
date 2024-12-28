@@ -28,7 +28,6 @@ class RaceRatingTest extends TestCase
     /** @test */
     public function a_user_can_rate_a_race()
     {
-        $this->withoutExceptionHandling();
         $user = User::factory()->create();
         $race = Race::factory()->create();
 
@@ -38,43 +37,17 @@ class RaceRatingTest extends TestCase
         ])->assertStatus(201);
 
         $this->assertEquals(5, $race->fresh()->averageRating());
-    }
 
-    /** @test */
-    public function a_user_can_update_their_rating()
-    {
-        $user = User::factory()->create();
-        $race = Race::factory()->create();
-
-        $this->actingAs($user, 'api')->postJson(route('race.rate', [
+        // Test updating via the same endpoint
+        $this->actingAs($user, 'api')->postJson(route('race.rate'), [
             'race_id' => $race->id,
-            'rating' => 5
-        ]));
-
-        $response = $this->actingAs($user, 'api')->putJson(route('race.rate.update', $race), [
             'rating' => 3
-        ]);
+        ])->assertStatus(201);
 
-        $response->assertSuccessful();
         $this->assertEquals(3, $race->fresh()->averageRating());
     }
 
-    /** @test */
-    public function a_user_can_delete_their_rating()
-    {
-        $user = User::factory()->create();
-        $race = Race::factory()->create();
-
-        $this->actingAs($user, 'api')->postJson(route('race.rate', [
-            'race_id' => $race->id,
-            'rating' => 5
-        ]));
-
-        $response = $this->actingAs($user, 'api')->deleteJson(route('race.rate.delete', $race));
-
-        $response->assertStatus(204);
-        $this->assertEquals(0, $race->fresh()->averageRating());
-    }
+    // Remove the a_user_can_update_their_rating test as it's now covered above
 
     /** @test */
     public function a_user_can_only_rate_between_1_and_5()
@@ -144,10 +117,11 @@ class RaceRatingTest extends TestCase
         $this->assertTrue(Cache::has($cacheKey));
         $this->assertEquals(4, Cache::get($cacheKey));
 
-        // Update rating via API
-        $this->putJson(route('race.rate.update', $race), [
+        // Update rating via same endpoint
+        $this->postJson(route('race.rate'), [
+            'race_id' => $race->id,
             'rating' => 5
-        ])->assertOk();
+        ])->assertStatus(201);
 
         $this->getJson(route('races.show', $race))
             ->assertOk();
@@ -165,19 +139,8 @@ class RaceRatingTest extends TestCase
 
         $this->getJson(route('races.show', $race))
             ->assertOk();
-            
+
         $this->assertTrue(Cache::has($cacheKey));
         $this->assertEquals(4, Cache::get($cacheKey));
-
-        // Delete first user's rating
-        $this->actingAs($user, 'api')
-            ->deleteJson(route('race.rate.delete', $race))
-            ->assertNoContent();
-
-        $this->getJson(route('races.show', $race))
-            ->assertOk();
-
-        $this->assertTrue(Cache::has($cacheKey));
-        $this->assertEquals(3, Cache::get($cacheKey));
     }
 }

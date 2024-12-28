@@ -82,6 +82,4 @@ Route::middleware(['auth:api'])->group(function () {
 
     // Rate Race
     Route::post('race/rate', [RaceRatingController::class, 'store'])->name('race.rate');
-    Route::put('race/{race}/rate', [RaceRatingController::class, 'update'])->name('race.rate.update');
-    Route::delete('race/{race}/rate', [RaceRatingController::class, 'destroy'])->name('race.rate.delete');
 });
