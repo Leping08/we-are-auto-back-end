@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * App\Models\Race
@@ -64,9 +65,11 @@ class Race extends Model
         'season_id' => 'integer',
         'starts_at' => 'datetime',
         'finishes_at' => 'datetime',
-        'boolean' => 'new'
+        'boolean' => 'new',
+        'average_rating' => 'float'
     ];
 
+    protected $appends = ['average_rating'];
 
     /**
      * @return BelongsTo
@@ -141,6 +144,31 @@ class Race extends Model
     }
 
     /**
+     * @return HasMany
+     */
+    public function ratings(): HasMany
+    {
+        return $this->hasMany(RaceRating::class);
+    }
+
+    /**
+     * @return float
+     */
+    public function averageRating(): float
+    {
+        return $this->ratings()->avg('rating') ?? 0.0;
+    }
+
+    /**
+     * @param  int  $userId
+     * @return int|null
+     */
+    public function getUserRating($userId): ?int
+    {
+        return $this->ratings()->where('user_id', $userId)->value('rating');
+    }
+
+    /**
      * @param  User  $user
      * @return array
      */
@@ -172,5 +200,19 @@ class Race extends Model
     {
         $activeSeason = Season::activeSeason()->first();
         return $query->where('season_id', $activeSeason->id);
+    }
+
+    public function getAverageRatingAttribute()
+    {
+        return Cache::remember(
+            "race.{$this->id}.average_rating",
+            Carbon::now()->addDays(7),
+            fn() => $this->ratings()->avg('rating') ?? 0
+        );
+    }
+
+    public function clearRatingCache()
+    {
+        Cache::forget("race.{$this->id}.average_rating");
     }
 }

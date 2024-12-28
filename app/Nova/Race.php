@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Fields\Number;
 
 class Race extends Resource
 {
@@ -73,6 +74,12 @@ class Race extends Resource
 
             HasMany::make('Videos'),
             HasMany::make('Problems', 'race_problems', RaceProblem::class),
+
+            HasMany::make('Ratings', 'ratings', RaceRating::class),
+
+            Number::make('Average Rating', function() {
+                return number_format($this->averageRating(), 1);
+            })->onlyOnDetail(),
 
             // BelongsToMany::make('Cars'),
             // BelongsToMany::make('Leagues'),
