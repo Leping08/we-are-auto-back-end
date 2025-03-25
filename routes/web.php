@@ -13,4 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/races/{race}/users/{user}', [\App\Http\Controllers\TestController::class, 'count']);
+// Route::get('/test', function () {
+//     return [
+//         'message' => 'This is a test route',
+//     ];
+// });
